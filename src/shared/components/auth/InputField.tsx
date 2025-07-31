@@ -1,16 +1,16 @@
-interface InputFieldPageProps {
+interface InputFieldProps {
   placeholder: string;
   type: "text" | "email" | "password";
   name: string;
   Icon: React.ElementType;
 }
 
-export default function InputFieldPage({
+export default function InputField({
   placeholder,
   type,
   name,
   Icon,
-}: InputFieldPageProps) {
+}: InputFieldProps) {
   return (
     <div className="w-[422px] relative">
       <input

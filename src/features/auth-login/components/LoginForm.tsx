@@ -1,10 +1,10 @@
 "use client";
 
-import BackgroundButton from "@/components/buttons/BackgroundButton";
-import BorderButton from "@/components/buttons/BorderButton";
-import EmailIcon from "@/components/icons/EmailIcon";
-import PasswordIcon from "@/components/icons/PasswordIcon";
-import InputFieldPage from "@/features/auth/components/InputFieldPage";
+import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
+import BorderButton from "@/shared/components/buttons/BorderButton";
+import EmailIcon from "@/shared/components/icons/EmailIcon";
+import PasswordIcon from "@/shared/components/icons/PasswordIcon";
+import InputField from "@/shared/components/auth/InputField";
 
 export default function LoginForm() {
   function handleLogin() {
@@ -17,13 +17,13 @@ export default function LoginForm() {
 
   return (
     <form className="flex flex-col items-center gap-[32px] my-[32px]">
-      <InputFieldPage
+      <InputField
         placeholder="Email"
         type="email"
         name="email"
         Icon={EmailIcon}
       />
-      <InputFieldPage
+      <InputField
         placeholder="Password"
         type="password"
         name="password"

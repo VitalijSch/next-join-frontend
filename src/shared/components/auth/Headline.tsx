@@ -1,8 +1,8 @@
-interface HeaderPageProps {
+interface HeadlineProps {
   name: string;
 }
 
-export default function HeadlinePage({ name }: HeaderPageProps) {
+export default function Headline({ name }: HeadlineProps) {
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-[61px] font-[700]">{name}</h1>

@@ -1,4 +1,4 @@
-import LogoIcon from "@/components/icons/LogoIcon";
+import LogoIcon from "@/shared/components/icons/LogoIcon";
 
 export default function Home() {
   return (

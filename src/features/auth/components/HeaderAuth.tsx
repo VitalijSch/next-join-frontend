@@ -1,7 +1,7 @@
 "use client";
 
-import BackgroundButton from "@/components/buttons/BackgroundButton";
-import LogoIcon from "@/components/icons/LogoIcon";
+import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
+import LogoIcon from "@/shared/components/icons/LogoIcon";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function HeaderAuth() {
