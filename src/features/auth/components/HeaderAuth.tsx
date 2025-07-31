@@ -20,8 +20,8 @@ export default function HeaderAuth() {
           <p className="text-[20px]">Not a Join user?</p>
           <BackgroundButton
             handleOnClick={handleSignup}
-            className="w-[91px] h-[49px] py-[15px] px-[16px]"
-            fontSize="16px"
+            classButton="w-[91px] h-[49px] py-[15px] px-[16px]"
+            classSpan="text-[16px]"
             name="Sign up"
           />
         </div>
