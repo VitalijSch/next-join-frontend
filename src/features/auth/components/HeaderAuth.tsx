@@ -14,7 +14,7 @@ export default function HeaderAuth() {
 
   return (
     <header className="w-full h-[135px] flex justify-between relative">
-      <LogoIcon className="w-[100px] h-[122px] self-end" />
+      <LogoIcon className="w-[100px] h-[122px] self-end text-[#2A3647]" />
       {pathname.includes("/login") && (
         <div className="h-fit flex items-center gap-[35px]">
           <p className="text-[20px]">Not a Join user?</p>

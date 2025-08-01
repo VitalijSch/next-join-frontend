@@ -3,10 +3,25 @@
 import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
 import BorderButton from "@/shared/components/buttons/BorderButton";
 import EmailIcon from "@/shared/components/icons/EmailIcon";
-import PasswordIcon from "@/shared/components/icons/PasswordIcon";
 import InputField from "@/shared/components/auth/InputField";
+import { useState } from "react";
+import PasswordVisibility from "@/shared/components/auth/PasswordVisibility";
 
 export default function LoginForm() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [passwordType, setPasswordType] = useState<"text" | "password">(
+    "password"
+  );
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
   function handleLogin() {
     console.log("Login");
   }
@@ -22,12 +37,22 @@ export default function LoginForm() {
         type="email"
         name="email"
         Icon={EmailIcon}
+        value={formData.email}
+        onChange={handleChange}
       />
       <InputField
         placeholder="Password"
-        type="password"
+        type={passwordType}
         name="password"
-        Icon={PasswordIcon}
+        Icon={() => (
+          <PasswordVisibility
+            isPasswordEmpty={formData.password.length === 0}
+            type={passwordType}
+            setType={setPasswordType}
+          />
+        )}
+        value={formData.password}
+        onChange={handleChange}
       />
       <div className="flex items-center gap-[35px]">
         <BackgroundButton

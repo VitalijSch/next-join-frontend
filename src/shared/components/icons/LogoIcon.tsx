@@ -5,7 +5,7 @@ interface LogoIconProps {
 export default function LogoIcon({ className }: LogoIconProps) {
   return (
     <svg
-      className={`${className} text-[#2A3647]`}
+      className={className}
       width="274"
       height="335"
       viewBox="0 0 274 335"

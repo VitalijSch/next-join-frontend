@@ -2,16 +2,36 @@
 
 import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
 import EmailIcon from "@/shared/components/icons/EmailIcon";
-import PasswordIcon from "@/shared/components/icons/PasswordIcon";
 import InputField from "@/shared/components/auth/InputField";
 import NameIcon from "@/shared/components/icons/NameIcon";
 import { useState } from "react";
 import CheckedIcon from "@/shared/components/icons/CheckedIcon";
 import CheckIcon from "@/shared/components/icons/CheckIcon";
 import Link from "next/link";
+import PasswordVisibility from "@/shared/components/auth/PasswordVisibility";
 
 export default function SignupForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [passwordType, setPasswordType] = useState<"text" | "password">(
+    "password"
+  );
+
+  const [confirmPasswordType, setConfirmPasswordType] = useState<
+    "text" | "password"
+  >("password");
+
   const [checked, setChecked] = useState<boolean>(false);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
 
   function handleSignup() {
     console.log("Signup");
@@ -19,24 +39,49 @@ export default function SignupForm() {
 
   return (
     <form className="flex flex-col items-center gap-[24px] my-[32px]">
-      <InputField placeholder="Name" type="text" name="name" Icon={NameIcon} />
+      <InputField
+        placeholder="Name"
+        type="text"
+        name="name"
+        Icon={NameIcon}
+        value={formData.name}
+        onChange={handleChange}
+      />
       <InputField
         placeholder="Email"
         type="email"
         name="email"
         Icon={EmailIcon}
+        value={formData.email}
+        onChange={handleChange}
       />
       <InputField
         placeholder="Password"
-        type="password"
+        type={passwordType}
         name="password"
-        Icon={PasswordIcon}
+        Icon={() => (
+          <PasswordVisibility
+            isPasswordEmpty={formData.password.length === 0}
+            type={passwordType}
+            setType={setPasswordType}
+          />
+        )}
+        value={formData.password}
+        onChange={handleChange}
       />
       <InputField
         placeholder="Confirm Password"
-        type="password"
+        type={confirmPasswordType}
         name="confirmPassword"
-        Icon={PasswordIcon}
+        Icon={() => (
+          <PasswordVisibility
+            isPasswordEmpty={formData.confirmPassword.length === 0}
+            type={confirmPasswordType}
+            setType={setConfirmPasswordType}
+          />
+        )}
+        value={formData.confirmPassword}
+        onChange={handleChange}
       />
       <div className="flex items-center gap-[8px]">
         <div
