@@ -3,6 +3,8 @@ interface InputFieldProps {
   type: "text" | "email" | "password";
   name: string;
   Icon: React.ElementType;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function InputField({
@@ -10,6 +12,8 @@ export default function InputField({
   type,
   name,
   Icon,
+  value,
+  onChange,
 }: InputFieldProps) {
   return (
     <div className="w-[422px] relative">
@@ -20,6 +24,8 @@ export default function InputField({
         type={type}
         name={name}
         id={name}
+        value={value}
+        onChange={onChange}
       />
       <Icon className="absolute top-1/2 right-[21px] -translate-y-1/2 text-[#A8A8A8] pointer-events-none cursor-pointer peer-focus:text-[#29ABE2]" />
     </div>

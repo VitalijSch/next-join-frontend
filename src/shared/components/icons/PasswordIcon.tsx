@@ -1,5 +1,5 @@
 interface PasswordIconProps {
-  className?: string;
+  className: string;
 }
 
 export default function PasswordIcon({ className }: PasswordIconProps) {
