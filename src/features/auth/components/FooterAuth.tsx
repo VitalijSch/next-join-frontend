@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useIntroStore } from "../stores/useIntroStore";
 
 export default function FooterAuth() {
   const links = [
@@ -14,8 +17,18 @@ export default function FooterAuth() {
     },
   ];
 
+  const hasSeenIntro = useIntroStore((state) => state.hasSeenIntro);
+
+  if (hasSeenIntro === null) {
+    return null;
+  }
+
   return (
-    <footer className="flex items-center gap-[16px]">
+    <footer
+      className={`${
+        !hasSeenIntro && "animate-fadeIn"
+      } flex items-center gap-[16px]`}
+    >
       {links.map((link) => (
         <Link
           key={link.name}
