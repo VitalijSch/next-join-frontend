@@ -9,13 +9,20 @@ import CheckedIcon from "@/shared/components/icons/CheckedIcon";
 import CheckIcon from "@/shared/components/icons/CheckIcon";
 import Link from "next/link";
 import PasswordVisibility from "@/shared/components/auth/PasswordVisibility";
+import { useForm } from "react-hook-form";
+import { signupSchema, SignupSchema } from "../schemas/signupSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createUser } from "../api/createUser";
 
 export default function SignupForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm<SignupSchema>({
+    resolver: zodResolver(signupSchema),
   });
 
   const [passwordType, setPasswordType] = useState<"text" | "password">(
@@ -28,32 +35,40 @@ export default function SignupForm() {
 
   const [checked, setChecked] = useState<boolean>(false);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+  const [privacyPolicyMessage, setPrivacyPolicy] = useState<boolean>(false);
 
-  function handleSignup() {
-    console.log("Signup");
+  async function handleSignup(data: SignupSchema) {
+    if (!checked) {
+      setPrivacyPolicy(true);
+      return;
+    }
+    const { confirmPassword, ...userData } = data;
+    await createUser(userData);
+    reset();
+    setPrivacyPolicy(false);
+    setChecked(false);
   }
 
   return (
-    <form className="flex flex-col items-center gap-[24px] my-[32px]">
+    <form
+      onSubmit={handleSubmit(handleSignup)}
+      className="flex flex-col items-center gap-[24px] my-[32px]"
+    >
       <InputField
         placeholder="Name"
         type="text"
         name="name"
         Icon={NameIcon}
-        value={formData.name}
-        onChange={handleChange}
+        register={register}
+        error={errors.name?.message}
       />
       <InputField
         placeholder="Email"
         type="email"
         name="email"
         Icon={EmailIcon}
-        value={formData.email}
-        onChange={handleChange}
+        register={register}
+        error={errors.email?.message}
       />
       <InputField
         placeholder="Password"
@@ -61,13 +76,14 @@ export default function SignupForm() {
         name="password"
         Icon={() => (
           <PasswordVisibility
-            isPasswordEmpty={formData.password.length === 0}
+            isPasswordEmpty={watch("password")?.length === 0}
             type={passwordType}
             setType={setPasswordType}
+            error={errors.password?.message}
           />
         )}
-        value={formData.password}
-        onChange={handleChange}
+        register={register}
+        error={errors.password?.message}
       />
       <InputField
         placeholder="Confirm Password"
@@ -75,13 +91,14 @@ export default function SignupForm() {
         name="confirmPassword"
         Icon={() => (
           <PasswordVisibility
-            isPasswordEmpty={formData.confirmPassword.length === 0}
+            isPasswordEmpty={watch("confirmPassword")?.length === 0}
             type={confirmPasswordType}
             setType={setConfirmPasswordType}
+            error={errors.confirmPassword?.message}
           />
         )}
-        value={formData.confirmPassword}
-        onChange={handleChange}
+        register={register}
+        error={errors.confirmPassword?.message}
       />
       <div className="flex items-center gap-[8px]">
         <div
@@ -101,13 +118,17 @@ export default function SignupForm() {
           </Link>
         </p>
       </div>
+      {privacyPolicyMessage && !checked && (
+        <p className="h-[14px] text-[12px] text-[#FF8190]">
+          You must accept the Privacy Policy.
+        </p>
+      )}
       <div className="flex items-center gap-[35px]">
         <BackgroundButton
           type="submit"
           classButton="w-[126px] h-[55px]"
           classSpan="text-[21px]"
           name="Sign up"
-          handleOnClick={handleSignup}
         />
       </div>
     </form>
