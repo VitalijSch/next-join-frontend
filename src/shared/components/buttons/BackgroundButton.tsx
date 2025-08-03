@@ -3,7 +3,7 @@ interface BackgroundButtonProps {
   classButton: string;
   classSpan: string;
   name: string;
-  handleOnClick: () => void;
+  handleOnClick?: () => void;
 }
 
 export default function BackgroundButton({

@@ -7,16 +7,22 @@ interface PasswordVisibilityProps {
   isPasswordEmpty: boolean;
   type: "text" | "password";
   setType: React.Dispatch<SetStateAction<"password" | "text">>;
+  error?: string;
 }
 
 export default function PasswordVisibility({
   isPasswordEmpty,
   type,
   setType,
+  error,
 }: PasswordVisibilityProps) {
   if (isPasswordEmpty)
     return (
-      <PasswordIcon className="absolute top-1/2 right-[21px] -translate-y-1/2 text-[#A8A8A8] pointer-events-none cursor-pointer peer-focus:text-[#29ABE2]" />
+      <PasswordIcon
+        className={`${
+          error ? "text-[#FF8190]" : "text-[#A8A8A8] peer-focus:text-[#29ABE2]"
+        } absolute top-1/2 right-[21px] -translate-y-1/2 pointer-events-none cursor-pointer`}
+      />
     );
 
   return (
@@ -25,7 +31,9 @@ export default function PasswordVisibility({
         if (type === "text") setType("password");
         if (type === "password") setType("text");
       }}
-      className="absolute top-1/2 right-[21px] -translate-y-1/2 text-[#A8A8A8] !pointer-events-auto cursor-pointer peer-focus:text-[#29ABE2]"
+      className={`${
+        error ? "text-[#FF8190]" : "text-[#A8A8A8] peer-focus:text-[#29ABE2]"
+      } absolute top-1/2 right-[21px] -translate-y-1/2 !pointer-events-auto cursor-pointer`}
     >
       {type === "text" ? <EyeIcon /> : <EyeOffIcon />}
     </div>
