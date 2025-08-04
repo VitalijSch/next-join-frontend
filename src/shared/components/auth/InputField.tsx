@@ -8,6 +8,7 @@ interface InputFieldProps {
   Icon: React.ElementType;
   register: UseFormRegister<SignupSchema>;
   error?: string;
+  onChange?: () => void;
 }
 
 export default function InputField({
@@ -17,6 +18,7 @@ export default function InputField({
   Icon,
   register,
   error,
+  onChange,
 }: InputFieldProps) {
   return (
     <div className="flex flex-col gap-[8px]">
@@ -32,6 +34,10 @@ export default function InputField({
           type={type}
           id={name}
           {...register(name)}
+          onChange={(e) => {
+            register(name).onChange(e);
+            onChange?.();
+          }}
         />
         <Icon
           className={`${
