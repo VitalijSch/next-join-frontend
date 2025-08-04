@@ -3,6 +3,7 @@
 @theme {
   --animate-topLeft: topLeft 0.6s ease-in-out 1s backwards;
   --animate-fadeIn: fadeIn 1s ease-in-out 1s backwards;
+  --animate-bottomCenter: bottomCenter 0.8s ease-in-out forwards;
 
   @keyframes topLeft {
     0% {
@@ -26,6 +27,15 @@
     }
     100% {
       opacity: 1;
+    }
+  }
+
+  @keyframes bottomCenter {
+    0% {
+      transform: translateY(100vh);
+    }
+    100% {
+      transform: translateY(0%);
     }
   }
 }
