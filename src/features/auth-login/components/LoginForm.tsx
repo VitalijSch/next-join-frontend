@@ -6,24 +6,50 @@ import EmailIcon from "@/shared/components/icons/EmailIcon";
 import InputField from "@/shared/components/auth/InputField";
 import { useState } from "react";
 import PasswordVisibility from "@/shared/components/auth/PasswordVisibility";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, LoginSchema } from "../schemas/loginSchema";
+import { loginUser } from "../api/loginUser";
+import LoadingIcon from "@/shared/components/icons/LoadingIcon";
 
 export default function LoginForm() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
   const [passwordType, setPasswordType] = useState<"text" | "password">(
     "password"
   );
+  const [loading, setLoading] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  function handleLogin() {
-    console.log("Login");
+  async function handleLogin(data: LoginSchema) {
+    setEmailError(null);
+    setPasswordError(null);
+    setLoading(true);
+    const response = await loginUser(data);
+    setLoading(false);
+    if (response.emailError) {
+      setEmailError(response.emailError);
+      setTimeout(() => {
+        setEmailError(null);
+        return;
+      }, 2000);
+    }
+    if (response.passwordError) {
+      setPasswordError(response.passwordError);
+      setTimeout(() => {
+        setPasswordError(null);
+        return;
+      }, 2000);
+    }
+    console.log(response);
   }
 
   function handleGuestLogin() {
@@ -31,14 +57,17 @@ export default function LoginForm() {
   }
 
   return (
-    <form className="flex flex-col items-center gap-[32px] my-[32px]">
+    <form
+      onSubmit={handleSubmit(handleLogin)}
+      className="flex flex-col items-center gap-[24px] my-[32px]"
+    >
       <InputField
         placeholder="Email"
         type="email"
         name="email"
         Icon={EmailIcon}
-        value={formData.email}
-        onChange={handleChange}
+        register={register}
+        error={emailError ? emailError : errors.email?.message}
       />
       <InputField
         placeholder="Password"
@@ -46,13 +75,14 @@ export default function LoginForm() {
         name="password"
         Icon={() => (
           <PasswordVisibility
-            isPasswordEmpty={formData.password.length === 0}
+            isPasswordEmpty={watch("password")?.length === 0}
             type={passwordType}
             setType={setPasswordType}
+            error={errors.password?.message}
           />
         )}
-        value={formData.password}
-        onChange={handleChange}
+        register={register}
+        error={passwordError ? passwordError : errors.password?.message}
       />
       <div className="flex items-center gap-[35px]">
         <BackgroundButton
@@ -60,7 +90,6 @@ export default function LoginForm() {
           classButton="w-[110px] h-[48px]"
           classSpan="text-[21px]"
           name="Log in"
-          handleOnClick={handleLogin}
         />
         <BorderButton
           type="button"
@@ -70,6 +99,11 @@ export default function LoginForm() {
           handleOnClick={handleGuestLogin}
         />
       </div>
+      {loading && (
+        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/20">
+          <LoadingIcon />
+        </div>
+      )}
     </form>
   );
 }

@@ -1,17 +1,16 @@
-import { SignupSchema } from "@/features/auth-signup/schemas/signupSchema";
-import { UseFormRegister } from "react-hook-form";
+import { Path, UseFormRegister } from "react-hook-form";
 
-interface InputFieldProps {
+interface InputFieldProps<T extends Record<string, unknown>> {
   placeholder: string;
   type: "text" | "email" | "password";
-  name: "password" | "name" | "email" | "confirmPassword";
+  name: Path<T>;
   Icon: React.ElementType;
-  register: UseFormRegister<SignupSchema>;
+  register: UseFormRegister<T>;
   error?: string;
   onChange?: () => void;
 }
 
-export default function InputField({
+export default function InputField<T extends Record<string, unknown>>({
   placeholder,
   type,
   name,
@@ -19,7 +18,7 @@ export default function InputField({
   register,
   error,
   onChange,
-}: InputFieldProps) {
+}: InputFieldProps<T>) {
   return (
     <div className="flex flex-col gap-[8px]">
       <div className="w-[422px] relative">
@@ -32,7 +31,7 @@ export default function InputField({
           autoComplete="off"
           placeholder={placeholder}
           type={type}
-          id={name}
+          id={name as string}
           {...register(name)}
           onChange={(e) => {
             register(name).onChange(e);

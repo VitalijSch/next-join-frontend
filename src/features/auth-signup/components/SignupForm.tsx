@@ -46,6 +46,7 @@ export default function SignupForm() {
   });
 
   async function handleSignup(data: SignupSchema) {
+    setExistEmailMessage(null);
     if (!checked) {
       setPrivacyPolicy(true);
       return;
@@ -68,7 +69,7 @@ export default function SignupForm() {
       reset();
       setPrivacyPolicy(false);
       setChecked(false);
-      // router.push("/login");
+      router.push("/login");
     }, 3000);
   }
 
