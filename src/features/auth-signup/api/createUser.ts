@@ -6,7 +6,12 @@ interface User {
   password: string;
 }
 
-export async function createUser(user: User) {
+interface CreateUser {
+  error?: string;
+  message?: string;
+}
+
+export async function createUser(user: User): Promise<CreateUser> {
   const request = await fetch("http://10.8.6.154:1337/create/user", {
     method: "POST",
     headers: {

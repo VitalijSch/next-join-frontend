@@ -3,7 +3,7 @@
 import SignupForm from "@/features/auth-signup/components/SignupForm";
 import Headline from "@/shared/components/auth/Headline";
 import ArrowBackButton from "@/shared/components/buttons/ArrowBackButton";
-import ToastMessage from "@/shared/components/ToastMessage";
+import ToastMessage from "@/shared/components/toasts/ToastMessage";
 import { useToastMessageStore } from "@/shared/stores/useToastMessageStore";
 
 export default function SignupPage() {

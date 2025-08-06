@@ -5,7 +5,13 @@ interface User {
   password: string;
 }
 
-export async function loginUser(user: User) {
+export interface LoginUser {
+  message?: string;
+  emailError?: string;
+  passwordError?: string;
+}
+
+export async function loginUser(user: User): Promise<LoginUser> {
   const request = await fetch("http://10.8.6.154:1337/login", {
     method: "POST",
     headers: {
