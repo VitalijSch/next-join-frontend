@@ -6,7 +6,7 @@ interface User {
 }
 
 export interface LoginUser {
-  message?: string;
+  token?: string;
   emailError?: string;
   passwordError?: string;
 }

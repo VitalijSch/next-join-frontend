@@ -1,8 +1,8 @@
-import { useRouter } from "next/navigation";
 import { useLoading } from "@/shared/contexts/LoadingContext";
 import { LoginSchema } from "../schemas/loginSchema";
 import { LoginUser, loginUser } from "../api/loginUser";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function useLoginForm() {
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export function useLoginForm() {
     const response = await loginUser(data);
     stopLoading();
     handleLoginErrors(response);
-    navigateToHome();
+    handleLoginSuccess(response);
   }
 
   function resetError() {
@@ -48,7 +48,18 @@ export function useLoginForm() {
     }, 2000);
   }
 
-  function navigateToHome() {
+  function handleLoginSuccess(response: LoginUser) {
+    if (response.token) {
+      setCockie(response.token);
+      navigateToLangdingPage();
+    }
+  }
+
+  function setCockie(token: string) {
+    document.cookie = `access_token=${token}; path=/; max-age=3600; Secure; SameSite=Lax`;
+  }
+
+  function navigateToLangdingPage() {
     router.push("/");
   }
 
