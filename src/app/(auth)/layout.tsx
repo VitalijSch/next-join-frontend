@@ -12,15 +12,12 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const setHasSeenIntro = useIntroStore((state) => state.setHasSeenIntro);
+  const { setHasSeenIntro } = useIntroStore();
 
   useEffect(() => {
-    const hasSeen = sessionStorage.getItem("hasSeenIntro");
-    const value = hasSeen === "true";
-    setHasSeenIntro(value);
-    if (hasSeen === null) {
-      sessionStorage.setItem("hasSeenIntro", "true");
-    }
+    setTimeout(() => {
+      setHasSeenIntro(true);
+    }, 2000);
   }, []);
 
   return (
