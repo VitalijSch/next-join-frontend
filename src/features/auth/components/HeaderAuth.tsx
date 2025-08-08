@@ -1,35 +1,37 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
 import LogoIcon from "@/shared/components/icons/LogoIcon";
 import { usePathname, useRouter } from "next/navigation";
-import { useIntroStore } from "../stores/useIntroStore";
 
 export default function HeaderAuth() {
+  const [isMounted, setIsMounted] = useState(false);
+
   const router = useRouter();
   const pathname = usePathname();
 
-  const hasSeenIntro = useIntroStore((state) => state.hasSeenIntro);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   function handleSignup() {
     router.push("/signup");
-  }
-
-  if (hasSeenIntro === null) {
-    return null;
   }
 
   return (
     <header className="w-full h-[135px] flex justify-end">
       <LogoIcon
         className={`${
-          !hasSeenIntro && "animate-topLeft"
+          isMounted && !sessionStorage.getItem("intro") ? "animate-topLeft" : ""
         } absolute top-[80px] left-[77px] z-10 w-[100px] h-[122px] text-[#2A3647]`}
       />
       {pathname.includes("/login") && (
         <div
           className={`${
-            !hasSeenIntro && "animate-fadeIn"
+            isMounted && !sessionStorage.getItem("intro")
+              ? "animate-fadeIn"
+              : ""
           } h-fit flex items-center gap-[35px]`}
         >
           <p className="text-[20px]">Not a Join user?</p>

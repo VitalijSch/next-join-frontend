@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useIntroStore } from "../stores/useIntroStore";
+import { useEffect, useState } from "react";
 
 export default function FooterAuth() {
+  const [isMounted, setIsMounted] = useState(false);
+
   const links = [
     {
       className: "w-[125px]",
@@ -17,16 +19,14 @@ export default function FooterAuth() {
     },
   ];
 
-  const hasSeenIntro = useIntroStore((state) => state.hasSeenIntro);
-
-  if (hasSeenIntro === null) {
-    return null;
-  }
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <footer
       className={`${
-        !hasSeenIntro && "animate-fadeIn"
+        isMounted && !sessionStorage.getItem("intro") ? "animate-fadeIn" : ""
       } flex items-center gap-[16px]`}
     >
       {links.map((link) => (
