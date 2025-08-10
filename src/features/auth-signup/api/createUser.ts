@@ -17,7 +17,6 @@ export async function createUser(user: User): Promise<CreateUser> {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify(user),
   });
   return request.json();

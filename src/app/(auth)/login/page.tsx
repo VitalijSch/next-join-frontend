@@ -1,15 +1,11 @@
 "use client";
 
 import LoginForm from "@/features/auth-login/components/LoginForm";
+import useMounted from "@/features/auth/hooks/useMounted";
 import Headline from "@/shared/components/auth/Headline";
-import { useEffect, useState } from "react";
 
 export default function LoginPage() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   return (
     <section

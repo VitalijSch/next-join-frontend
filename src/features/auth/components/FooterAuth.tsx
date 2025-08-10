@@ -1,27 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import useMounted from "../hooks/useMounted";
+import { links } from "../data/navLinks";
 
 export default function FooterAuth() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  const links = [
-    {
-      className: "w-[125px]",
-      href: "/privacy-policy",
-      name: "Privacy Policy",
-    },
-    {
-      className: "w-[112px]",
-      href: "/legal-notice",
-      name: "Legal notice",
-    },
-  ];
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   return (
     <footer

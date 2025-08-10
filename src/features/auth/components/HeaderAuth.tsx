@@ -1,23 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
 import LogoIcon from "@/shared/components/icons/LogoIcon";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import useMounted from "../hooks/useMounted";
 
 export default function HeaderAuth() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  function handleSignup() {
-    router.push("/signup");
-  }
+  const isMounted = useMounted();
 
   return (
     <header className="w-full h-[135px] flex justify-end">
@@ -35,12 +26,13 @@ export default function HeaderAuth() {
           } h-fit flex items-center gap-[35px]`}
         >
           <p className="text-[20px]">Not a Join user?</p>
-          <BackgroundButton
-            handleOnClick={handleSignup}
-            classButton="w-[91px] h-[49px] py-[15px] px-[16px]"
-            classSpan="text-[16px]"
-            name="Sign up"
-          />
+          <Link href="/signup">
+            <BackgroundButton
+              classButton="w-[91px] h-[49px] py-[15px] px-[16px]"
+              classSpan="text-[16px]"
+              name="Sign up"
+            />
+          </Link>
         </div>
       )}
     </header>
