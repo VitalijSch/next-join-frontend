@@ -60,7 +60,7 @@ export function useLoginForm() {
   }
 
   function navigateToLangdingPage() {
-    router.push("/");
+    router.push("/summary");
   }
 
   function handleGuestLogin() {

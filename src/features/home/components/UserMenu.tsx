@@ -23,7 +23,7 @@ export default function UserMenu({ setOpenUserMenu }: UserMenuProps) {
               <button
                 key={index}
                 onClick={() => logoutUser()}
-                className="w-full h-[46px] flex justify-center items-center text-[#CDCDCD] rounded-[8px] cursor-pointer hover:bg-[#2A3D59] transition-colors duration-300 ease-in-out"
+                className="w-full h-[46px] flex justify-center items-center text-[#CDCDCD] rounded-[8px] cursor-pointer hover:bg-[#2D3C56] transition-colors duration-300 ease-in-out"
               >
                 {link.name}
               </button>
