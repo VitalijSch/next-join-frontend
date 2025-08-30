@@ -1,12 +1,6 @@
 export default function PrivacyPolicyPage() {
   return (
-    <div className="pt-[110px] pr-[87px] pb-[127px] pl-[96px] overflow-auto">
-      {/* <svg (click)="homeService.goBack()" width="22" height="20" viewBox="0 0 22 20" fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M4.93725 8.66673H19.8333C20.5696 8.66673 21.1666 9.26368 21.1666 10.0001C21.1666 10.7364 20.5696 11.3334 19.8333 11.3334H4.93725L11.1466 17.5427C11.6672 18.0634 11.6672 18.9074 11.1466 19.4281C10.626 19.9487 9.78187 19.9487 9.26125 19.4281L1.24746 11.4143C0.466415 10.6332 0.466417 9.3669 1.24747 8.58585L9.26125 0.57206C9.78187 0.0514398 10.626 0.0514406 11.1466 0.572061C11.6672 1.09268 11.6672 1.93677 11.1466 2.45739L4.93725 8.66673Z"
-                fill="#29ABE2" />
-        </svg> */}
+    <div className="py-[110px] px-[96px] overflow-auto relative">
       <h1 className="text-[61px] font-[700]">Privacy Policy</h1>
       <br />
       <br />
@@ -132,13 +126,15 @@ export default function PrivacyPolicyPage() {
       </ul>
       <br />
       <br />
-      <h2 className="text-[27px] font-[700]">Collecting and Using Your Personal Data</h2>
+      <h2 className="text-[27px] font-[700]">
+        Collecting and Using Your Personal Data
+      </h2>
       <br />
       <br />
       <h3 className="text-[20px] font-[700]">Types of Data Collected</h3>
       <br />
       <br />
-      <h4  className="text-[18px] font-[700]">Personal Data</h4>
+      <h4 className="text-[18px] font-[700]">Personal Data</h4>
       <p>
         While using Our Service, We may ask You to provide Us with certain
         personally identifiable information that can be used to contact or
@@ -162,7 +158,7 @@ export default function PrivacyPolicyPage() {
           <p>Usage Data</p>
         </li>
       </ul>
-      <h4  className="text-[18px] font-[700]">Usage Data</h4>
+      <h4 className="text-[18px] font-[700]">Usage Data</h4>
       <p>Usage Data is collected automatically when using the Service.</p>
       <p>
         Usage Data may include information such as Your Device&apos;s Internet
@@ -184,7 +180,9 @@ export default function PrivacyPolicyPage() {
         visit our Service or when You access the Service by or through a mobile
         device.
       </p>
-      <h4  className="text-[18px] font-[700]">Information Collected while Using the Application</h4>
+      <h4 className="text-[18px] font-[700]">
+        Information Collected while Using the Application
+      </h4>
       <p>
         While using Our Application, in order to provide features of Our
         Application, We may collect, with Your prior permission:
@@ -316,7 +314,9 @@ export default function PrivacyPolicyPage() {
       </ul>
       <br />
       <br />
-      <h3 className="text-[20px] font-[700]">Retention of Your Personal Data</h3>
+      <h3 className="text-[20px] font-[700]">
+        Retention of Your Personal Data
+      </h3>
       <br />
       <br />
       <p>
@@ -385,23 +385,25 @@ export default function PrivacyPolicyPage() {
       </p>
       <br />
       <br />
-      <h3 className="text-[20px] font-[700]">Disclosure of Your Personal Data</h3>
+      <h3 className="text-[20px] font-[700]">
+        Disclosure of Your Personal Data
+      </h3>
       <br />
       <br />
-      <h4  className="text-[18px] font-[700]">Business Transactions</h4>
+      <h4 className="text-[18px] font-[700]">Business Transactions</h4>
       <p>
         If the Company is involved in a merger, acquisition or asset sale, Your
         Personal Data may be transferred. We will provide notice before Your
         Personal Data is transferred and becomes subject to a different Privacy
         Policy.
       </p>
-      <h4  className="text-[18px] font-[700]">Law enforcement</h4>
+      <h4 className="text-[18px] font-[700]">Law enforcement</h4>
       <p>
         Under certain circumstances, the Company may be required to disclose
         Your Personal Data if required to do so by law or in response to valid
         requests by public authorities (e.g. a court or a government agency).
       </p>
-      <h4  className="text-[18px] font-[700]">Other legal requirements</h4>
+      <h4 className="text-[18px] font-[700]">Other legal requirements</h4>
       <p>
         The Company may disclose Your Personal Data in the good faith belief
         that such action is necessary to:
