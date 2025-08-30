@@ -12,7 +12,7 @@ export default function HomeLayout({
   useAuthenticatedUser();
 
   return (
-    <main className="max-w-[1920px] max-h-[1024px] w-full h-full grid [grid-template-columns:232px_auto] [grid-template-rows:96px_auto] relative">
+    <main className="max-w-[1440px] max-h-[1024px] w-full h-full grid [grid-template-columns:232px_auto] [grid-template-rows:96px_auto] relative">
       <HeaderHome />
       {children}
       <SidebarHome />
