@@ -14,7 +14,7 @@ export default function AuthLayout({
   useMarkIntroSeenAfterDelay();
 
   return (
-    <section className="max-w-[1920px] max-h-[1024px] w-full h-full pt-[67px] pr-[122px] pb-[40px] pl-[77px] flex flex-col justify-between items-center relative">
+    <section className="max-w-[1440px] max-h-[1024px] w-full h-full pt-[67px] pr-[122px] pb-[40px] pl-[77px] flex flex-col justify-between items-center relative">
       <HeaderAuth />
       <LoadingProvider>
         <LoadingOverlay />
