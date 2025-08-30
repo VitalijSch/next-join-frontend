@@ -15,6 +15,8 @@ export default function HeaderHome() {
 
   const user = useUserStore((state) => state.user);
 
+  const isHelpPage = pathname.includes("/help");
+  
   const isRestrictedPage =
     pathname.includes("/privacy-policy") || pathname.includes("/legal-notice");
 
@@ -29,9 +31,11 @@ export default function HeaderHome() {
       <p className="text-[20px]">Kanban Project Management Tool</p>
       {!isRestrictedPage && (
         <div className="flex items-center gap-[16px]">
-          <Link href="/help">
-            <HelpIcon />
-          </Link>
+          {!isHelpPage && (
+            <Link href="/help">
+              <HelpIcon />
+            </Link>
+          )}
           <div
             onClick={() => setOpenUserMenu(true)}
             className={`${
