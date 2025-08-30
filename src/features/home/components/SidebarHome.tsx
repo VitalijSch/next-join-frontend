@@ -39,12 +39,14 @@ export default function SidebarHome() {
           );
         })}
       </div>
-      <div className="w-full flex flex-col gap-[16px] pt-[243px] pl-[56px]">
+      <div className="w-full flex flex-col gap-[16px] pt-[243px]">
         {links.map((link) => (
           <Link
             key={link.name}
             href={link.href}
-            className={`${link.className} text-[#A8A8A8] hover:text-[#29ABE2] hover:font-[700] transition-all duration-300 ease-in-out`}
+            className={`${pathname.includes(link.href) ? "!bg-[#091931]" : "hover:text-[#29ABE2] hover:font-[700]"} ${
+              link.className
+            } w-full py-[8px] pl-[56px] text-[#A8A8A8] transition-all duration-300 ease-in-out`}
           >
             {link.name}
           </Link>
