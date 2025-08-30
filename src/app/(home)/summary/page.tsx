@@ -13,7 +13,7 @@ export default function SummaryPage() {
   const user = useUserStore((state) => state.user);
 
   return (
-    <section className="row-start-2 row-end-3 col-start-2 col-end-3 flex pt-[110px] pr-[87px] pb-[127px] pl-[96px]">
+    <section className="row-start-2 row-end-3 col-start-2 col-end-3 max-w-[1208px] flex pt-[110px] pb-[127px] pl-[96px]">
       <div className="w-fit flex flex-col justify-between">
         <HeaderSummary />
         <div className="flex flex-col gap-[28px]">

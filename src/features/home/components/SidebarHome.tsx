@@ -5,15 +5,24 @@ import { sidebarLinks } from "../data/sidebarLinks";
 import { links } from "@/features/auth/data/navLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUserStore } from "@/shared/stores/useUserStore";
 
 export default function SidebarHome() {
   const pathname = usePathname();
+
+  const user = useUserStore((state) => state.user);
+
+  const isUserLogged = user.email !== "";
+
+  const sidebarFilteredLinks = isUserLogged
+    ? sidebarLinks.slice(1)
+    : sidebarLinks.slice(0, 1);
 
   return (
     <section className="row-start-1 row-end-3 flex flex-col justify-between items-center py-[64px] bg-[#2A3647]">
       <LogoIcon className="w-[100px] h-[122px] text-[#ffffff]" />
       <div className="w-full flex flex-col items-center gap-[15px]">
-        {sidebarLinks.map((link, index) => {
+        {sidebarFilteredLinks.map((link, index) => {
           const Icon = link.icon;
           return (
             <Link
@@ -39,12 +48,16 @@ export default function SidebarHome() {
           );
         })}
       </div>
-      <div className="w-full flex flex-col gap-[16px] pt-[243px]">
+      <div className="w-full flex flex-col pt-[243px]">
         {links.map((link) => (
           <Link
             key={link.name}
             href={link.href}
-            className={`${pathname.includes(link.href) ? "!bg-[#091931]" : "hover:text-[#29ABE2] hover:font-[700]"} ${
+            className={`${
+              pathname.includes(link.href)
+                ? "!bg-[#091931]"
+                : "hover:text-[#29ABE2] hover:font-[700]"
+            } ${
               link.className
             } w-full py-[8px] pl-[56px] text-[#A8A8A8] transition-all duration-300 ease-in-out`}
           >
