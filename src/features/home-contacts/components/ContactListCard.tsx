@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { useContactStore } from "../stores/useContactStore";
 import { getAbbreviation } from "../utils/getAbbreviation";
 import { getFirstNameLetters } from "../utils/getFirstNameLetters";
 
 export default function ContactListCard() {
-  const [selectedContactId, setSelectedContactId] = useState<number | null>(
-    null
-  );
-
   const contacts = useContactStore((state) => state.contacts);
+
+  const selectedContact = useContactStore((state) => state.selectedContact);
+  const setSelectedContact = useContactStore(
+    (state) => state.setSelectedContact
+  );
 
   return (
     <>
@@ -23,9 +23,9 @@ export default function ContactListCard() {
             .map((contact, index) => (
               <div
                 key={index}
-                onClick={() => setSelectedContactId(contact.id)}
+                onClick={() => setSelectedContact(selectedContact !== contact ? contact : null)}
                 className={`${
-                  contact.id === selectedContactId
+                  contact.id === selectedContact?.id
                     ? "bg-[#2A3647]"
                     : "hover:bg-[linear-gradient(180deg,#F9F9F9_0%,#F0F0F0_100%)]"
                 } w-[352px] h-[78px] flex items-center gap-[35px] px-[24px] rounded-[10px] cursor-pointer`}
@@ -41,7 +41,7 @@ export default function ContactListCard() {
                 <div className="flex flex-col gap-[5px]">
                   <span
                     className={`${
-                      contact.id === selectedContactId ? "text-white" : ""
+                      contact.id === selectedContact?.id ? "text-white" : ""
                     } text-[20px] leading-[120%]`}
                   >
                     {contact.name}

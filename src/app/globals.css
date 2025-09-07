@@ -4,6 +4,7 @@
   --animate-topLeft: topLeft 0.6s ease-in-out 1s backwards;
   --animate-fadeIn: fadeIn 1s ease-in-out 1s backwards;
   --animate-bottomCenter: bottomCenter 0.8s ease-in-out forwards;
+  --animate-slideInRight: slideInRight 0.3s ease-in-out forwards;
 
   @keyframes topLeft {
     0% {
@@ -36,6 +37,17 @@
     }
     100% {
       transform: translateY(0%);
+    }
+  }
+
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
     }
   }
 }
