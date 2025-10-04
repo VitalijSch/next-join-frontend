@@ -1,6 +1,7 @@
 import { Path, UseFormRegister } from "react-hook-form";
 
 interface InputFieldProps<T extends Record<string, unknown>> {
+  className?: string;
   placeholder: string;
   type: "text" | "email" | "password";
   name: Path<T>;
@@ -11,6 +12,7 @@ interface InputFieldProps<T extends Record<string, unknown>> {
 }
 
 export default function InputField<T extends Record<string, unknown>>({
+  className,
   placeholder,
   type,
   name,
@@ -21,7 +23,7 @@ export default function InputField<T extends Record<string, unknown>>({
 }: InputFieldProps<T>) {
   return (
     <div className="flex flex-col gap-[8px]">
-      <div className="w-[422px] relative">
+      <div className={`${className} w-[422px] relative`}>
         <input
           className={`${
             error

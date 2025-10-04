@@ -2,12 +2,14 @@
 
 import { Contact } from "../interfaces/contact";
 
-export async function getContacts(token: string): Promise<Contact[]> {
-  const request = await fetch("http://10.8.6.154:1337/contacts", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return request.json();
+export async function getContacts(): Promise<Contact[] | { detail: string }> {
+  const response = await fetch(
+    "http://10.8.6.154:1338/contacts/contact-info/",
+    {
+      method: "GET",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+  return await response.json();
 }

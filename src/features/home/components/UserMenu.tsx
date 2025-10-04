@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { menuLinks } from "../data/menuLinks";
 import { Dispatch, SetStateAction } from "react";
-import { logoutUser } from "../utils/logoutUser";
+import { useLogoutUser } from "../hooks/useLogoutUser";
 
 interface UserMenuProps {
   setOpenUserMenu: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function UserMenu({ setOpenUserMenu }: UserMenuProps) {
+  const handleLogoutUser = useLogoutUser();
+
   return (
     <div
       onClick={() => setOpenUserMenu(false)}
-      className="absolute inset-0 pt-[96px] pr-[20px] flex justify-end"
+      className="absolute inset-0 z-10 pt-[96px] pr-[20px] flex justify-end"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -22,7 +24,7 @@ export default function UserMenu({ setOpenUserMenu }: UserMenuProps) {
             return (
               <button
                 key={index}
-                onClick={() => logoutUser()}
+                onClick={async () => await handleLogoutUser()}
                 className="w-full h-[46px] flex justify-center items-center text-[#CDCDCD] rounded-[8px] cursor-pointer hover:bg-[#2D3C56] transition-colors duration-300 ease-in-out"
               >
                 {link.name}

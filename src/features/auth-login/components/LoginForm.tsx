@@ -22,18 +22,14 @@ export default function LoginForm() {
   const {
     handleLogin,
     handleGuestLogin,
-    emailError,
-    passwordError,
-    setEmailError,
-    setPasswordError,
+    emailPasswordError,
+    setEmailPasswordError
   } = useLoginForm();
 
   const inputFields = useLoginFields(
     watch,
-    setEmailError,
-    setPasswordError,
-    emailError,
-    passwordError,
+    emailPasswordError,
+    setEmailPasswordError,
     errors
   );
 
@@ -63,7 +59,7 @@ export default function LoginForm() {
         <BorderButton
           type="button"
           classButton="w-[177px] h-[48px]"
-          classSpan="text-[21px]"
+          classSpan="text-[21px] font-[700]"
           name="Guest Log in"
           handleOnClick={handleGuestLogin}
         />

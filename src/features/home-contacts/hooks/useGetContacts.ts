@@ -1,19 +1,23 @@
-import getToken from "@/shared/utils/getToken";
 import { useEffect } from "react";
 import { useContactStore } from "../stores/useContactStore";
+import { useUserStore } from "@/shared/stores/useUserStore";
 import { getContacts } from "../api/getContacts";
 
 export function useGetContacts() {
-  const token = getToken();
   const setContacts = useContactStore((state) => state.setContacts);
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
-    async function handleGetContacts() {
-      if (token) {
-        const contacts = await getContacts(token);
-        setContacts(contacts);
+    if (user.id > 0) {
+      async function handleGetContacts() {
+        const contacts = await getContacts();
+        if (Array.isArray(contacts)) {
+          setContacts(contacts);
+        } else {
+          setContacts([]);
+        }
       }
+      handleGetContacts();
     }
-    handleGetContacts();
-  }, [token, setContacts]);
+  }, [setContacts, user.id]);
 }

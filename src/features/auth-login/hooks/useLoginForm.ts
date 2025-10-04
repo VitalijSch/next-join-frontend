@@ -3,12 +3,17 @@ import { LoginSchema } from "../schemas/loginSchema";
 import { LoginUser, loginUser } from "../api/loginUser";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/shared/stores/useUserStore";
 
 export function useLoginForm() {
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [emailPasswordError, setEmailPasswordError] = useState<string | null>(
+    null
+  );
 
   const router = useRouter();
+
+  const setUser = useUserStore((state) => state.setUser);
+
   const { startLoading, stopLoading } = useLoading();
 
   async function handleLogin(data: LoginSchema) {
@@ -21,42 +26,27 @@ export function useLoginForm() {
   }
 
   function resetError() {
-    setEmailError(null);
-    setPasswordError(null);
+    setEmailPasswordError(null);
   }
 
   function handleLoginErrors(response: LoginUser) {
-    if (response.emailError) {
-      showEmailError(response.emailError);
+    if (response.non_field_errors && response.non_field_errors[0]) {
+      setEmailPasswordError(response.non_field_errors[0]);
+      setTimeout(() => {
+        setEmailPasswordError(null);
+      }, 2000);
     }
-    if (response.passwordError) {
-      showPasswordError(response.passwordError);
-    }
-  }
-
-  function showEmailError(error: string) {
-    setEmailError(error);
-    setTimeout(() => {
-      setEmailError(null);
-    }, 2000);
-  }
-
-  function showPasswordError(error: string) {
-    setPasswordError(error);
-    setTimeout(() => {
-      setPasswordError(null);
-    }, 2000);
   }
 
   function handleLoginSuccess(response: LoginUser) {
-    if (response.token) {
-      setCockie(response.token);
+    if (response.user?.id && response.user?.name && response.user?.email) {
+      setUser({
+        id: response.user?.id,
+        name: response.user?.name,
+        email: response.user?.email,
+      });
       navigateToLangdingPage();
     }
-  }
-
-  function setCockie(token: string) {
-    document.cookie = `access_token=${token}; path=/; max-age=3600; Secure; SameSite=Lax`;
   }
 
   function navigateToLangdingPage() {
@@ -70,9 +60,7 @@ export function useLoginForm() {
   return {
     handleLogin,
     handleGuestLogin,
-    emailError,
-    passwordError,
-    setEmailError,
-    setPasswordError,
+    emailPasswordError,
+    setEmailPasswordError,
   };
 }
