@@ -11,6 +11,7 @@ import { contactSchema, ContactSchema } from "../schemas/contactSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContactForm } from "../hooks/useContactForm";
+import NameIcon from "@/shared/components/icons/NameIcon";
 
 interface ContactFormProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -36,14 +37,9 @@ export default function ContactForm({
     resolver: zodResolver(contactSchema),
   });
 
-  const { handleCreateContact, existEmailMessage, setExistEmailMessage } =
-    useContactForm(reset, setOpen);
+  const { handleCreateContact } = useContactForm(reset, setOpen);
 
-  const inputFields = useContactFields(
-    setExistEmailMessage,
-    existEmailMessage,
-    errors
-  );
+  const inputFields = useContactFields(errors);
 
   return (
     <div
@@ -52,7 +48,7 @@ export default function ContactForm({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="max-w-[1212px] w-full h-[592px] flex rounded-[30px] overflow-hidden animate-slideInRight"
+        className="relative max-w-[1212px] w-full h-[592px] flex rounded-[30px] overflow-hidden animate-slideInRight"
       >
         <div className="w-[467px] h-full flex flex-col justify-center gap-[12px] py-[66px] px-[48px] bg-[#2A3647]">
           <div
@@ -107,6 +103,9 @@ export default function ContactForm({
               />
             </div>
           </form>
+          <div className="absolute top-[204px] left-[550px] w-[120px] h-[120px] flex justify-center items-center bg-[#D1D1D1] border-3 border-white rounded-full shadow-[0px_0px_4px_0px_#0000001A]">
+            <NameIcon className="w-[64px] h-[64px] text-white" />
+          </div>
         </div>
       </div>
     </div>

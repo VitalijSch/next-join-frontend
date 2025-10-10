@@ -13,7 +13,7 @@ export interface LoginUser {
 }
 
 export async function loginUser(user: AuthUser): Promise<LoginUser> {
-  const request = await fetch("http://10.8.6.154:1338/users/login/", {
+  const request = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,8 +1,14 @@
+import { useResetSelectedContact } from "../hooks/useResetSelectedContact";
+import useScrollToCreatedContact from "../hooks/useScrollToCreatedContact";
 import { useContactStore } from "../stores/useContactStore";
 import { getAbbreviation } from "../utils/getAbbreviation";
 import { getFirstNameLetters } from "../utils/getFirstNameLetters";
 
 export default function ContactListCard() {
+  useResetSelectedContact();
+
+  const { contactRefs } = useScrollToCreatedContact();
+
   const contacts = useContactStore((state) => state.contacts);
 
   const selectedContact = useContactStore((state) => state.selectedContact);
@@ -13,17 +19,26 @@ export default function ContactListCard() {
   return (
     <>
       {getFirstNameLetters(contacts).map((letter, index) => (
-        <div key={index} className="w-[400px] flex-1 px-[24px]">
+        <div key={index} className="w-[400px] h-fit px-[24px]">
           <div className="w-full h-[58px] flex items-center pl-[36px] text-[20px]">
             {letter}
           </div>
           <div className="w-[352px] h-[1px] my-[8px] bg-[#D1D1D1] rounded-[3px]" />
           {contacts
             .filter((contact) => contact.name[0].toUpperCase() === letter)
-            .map((contact, index) => (
+            .map((contact) => (
               <div
-                key={index}
-                onClick={() => setSelectedContact(selectedContact !== contact ? contact : null)}
+                key={contact.id}
+                ref={(el) => {
+                  if (contact.id) {
+                    contactRefs.current[contact.id.toString()] = el;
+                  }
+                }}
+                onClick={() =>
+                  setSelectedContact(
+                    selectedContact !== contact ? contact : null
+                  )
+                }
                 className={`${
                   contact.id === selectedContact?.id
                     ? "bg-[#2A3647]"
@@ -31,7 +46,7 @@ export default function ContactListCard() {
                 } w-[352px] h-[78px] flex items-center gap-[35px] px-[24px] rounded-[10px] cursor-pointer`}
               >
                 <div
-                  style={{ backgroundColor: contact.iconColor }}
+                  style={{ backgroundColor: contact.icon_color }}
                   className="w-[42px] h-[42px] flex justify-center items-center border-2 border-white rounded-[45px]"
                 >
                   <span className="text-[12px] text-white">

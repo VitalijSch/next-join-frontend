@@ -4,8 +4,6 @@ import EmailIcon from "@/shared/components/icons/EmailIcon";
 import { PhoneIcon } from "@/shared/components/icons/PhoneIcon";
 
 export function useContactFields(
-  setExistEmailMessage: (msg: string | null) => void,
-  existEmailMessage: string | null,
   errors: FieldErrors<{
     name: string;
     email: string;
@@ -25,8 +23,7 @@ export function useContactFields(
       placeholder: "Email",
       type: "email",
       Icon: EmailIcon,
-      error: existEmailMessage || errors.email?.message,
-      onChange: () => setExistEmailMessage(null),
+      error: errors.email?.message,
     },
     {
       name: "phone",

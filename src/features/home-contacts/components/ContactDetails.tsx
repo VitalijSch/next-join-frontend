@@ -4,11 +4,14 @@ import { useState } from "react";
 import { useContactStore } from "../stores/useContactStore";
 import ContactDetailsCard from "./ContactDetailsCard";
 import ContactForm from "./ContactForm";
+import ToastMessage from "@/shared/components/toasts/ToastMessage";
 
 export default function ContactDetails() {
   const [openEditContact, setOpenEditContact] = useState(false);
 
   const selectedContact = useContactStore((state) => state.selectedContact);
+
+  const showToastMessage = useContactStore((state) => state.showToastMessage);
 
   return (
     <>
@@ -23,6 +26,9 @@ export default function ContactDetails() {
             selectedContact={selectedContact}
             setOpenEditContact={setOpenEditContact}
           />
+        )}
+        {showToastMessage && (
+          <ToastMessage message="Contact succesfully created" />
         )}
       </div>
       {openEditContact && (

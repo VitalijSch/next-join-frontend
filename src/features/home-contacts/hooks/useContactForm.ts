@@ -1,26 +1,35 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useLoading } from "@/shared/contexts/LoadingContext";
 import { ContactSchema } from "../schemas/contactSchema";
 import { createContact } from "../api/createContact";
 import { colors } from "../data/colors";
+import { useGetContacts } from "./useGetContacts";
+import { useContactStore } from "../stores/useContactStore";
 
 export function useContactForm(
   reset: () => void,
   setOpen: Dispatch<SetStateAction<boolean>>
 ) {
-  const [existEmailMessage, setExistEmailMessage] = useState<string | null>(
-    null
-  );
-
   const { startLoading, stopLoading } = useLoading();
 
-  async function handleCreateContact(data: ContactSchema) {
-    clearPreviousErrors();
-    await processUserSignup(data);
-  }
+  const contacts = useContactStore((state) => state.contacts);
 
-  function clearPreviousErrors() {
-    setExistEmailMessage(null);
+  const setScrollToContact = useContactStore(
+    (state) => state.setScrollToContact
+  );
+
+  const setSelectedContact = useContactStore(
+    (state) => state.setSelectedContact
+  );
+
+  const setShowToastMessage = useContactStore(
+    (state) => state.setShowToastMessage
+  );
+
+  const handleGetContacts = useGetContacts();
+
+  async function handleCreateContact(data: ContactSchema) {
+    await processUserSignup(data);
   }
 
   async function processUserSignup(userData: ContactSchema) {
@@ -29,20 +38,20 @@ export function useContactForm(
       ...userData,
       icon_color: getRandomColor(),
     };
-    const response = await createContact(contactWithColor);
+    await createContact(contactWithColor);
+    await handleGetContacts();
     stopLoading();
-
-    if (
-      response &&
-      typeof response === "object" &&
-      "detail" in response &&
-      response.detail === "custom user with this email already exists."
-    ) {
-      showEmailExistsError(response.detail);
-      return;
-    }
     reset();
     setOpen(false);
+    setScrollToContact(true);
+    handleToastMessage();
+  }
+
+  function handleToastMessage() {
+    setShowToastMessage(true);
+    setTimeout(() => {
+      setShowToastMessage(false);
+    }, 2000);
   }
 
   function getRandomColor() {
@@ -50,13 +59,13 @@ export function useContactForm(
     return colors[randomIndex];
   }
 
-  function showEmailExistsError(error: string) {
-    setExistEmailMessage(error);
-  }
+  useEffect(() => {
+    if (contacts.length > 0) {
+      setSelectedContact(contacts[contacts.length - 1]);
+    }
+  }, [contacts]);
 
   return {
     handleCreateContact,
-    existEmailMessage,
-    setExistEmailMessage,
   };
 }

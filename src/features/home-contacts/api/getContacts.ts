@@ -4,7 +4,7 @@ import { Contact } from "../interfaces/contact";
 
 export async function getContacts(): Promise<Contact[] | { detail: string }> {
   const response = await fetch(
-    "http://10.8.6.154:1338/contacts/contact-info/",
+    `${process.env.NEXT_PUBLIC_API_URL}/contacts/contact-info/`,
     {
       method: "GET",
       credentials: "include",
