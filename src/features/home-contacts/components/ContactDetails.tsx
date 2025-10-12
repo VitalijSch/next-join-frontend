@@ -22,10 +22,7 @@ export default function ContactDetails() {
           <span className="text-[27px] text-[#2A3647]">Better with a team</span>
         </div>
         {selectedContact && (
-          <ContactDetailsCard
-            selectedContact={selectedContact}
-            setOpenEditContact={setOpenEditContact}
-          />
+          <ContactDetailsCard setOpenEditContact={setOpenEditContact} />
         )}
         {showToastMessage && (
           <ToastMessage message="Contact succesfully created" />

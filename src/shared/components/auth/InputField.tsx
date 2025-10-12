@@ -9,6 +9,7 @@ interface InputFieldProps<T extends Record<string, unknown>> {
   register: UseFormRegister<T>;
   error?: string;
   onChange?: () => void;
+  defaulValue?: string;
 }
 
 export default function InputField<T extends Record<string, unknown>>({
@@ -20,6 +21,7 @@ export default function InputField<T extends Record<string, unknown>>({
   register,
   error,
   onChange,
+  defaulValue,
 }: InputFieldProps<T>) {
   return (
     <div className="flex flex-col gap-[8px]">
@@ -39,6 +41,7 @@ export default function InputField<T extends Record<string, unknown>>({
             register(name).onChange(e);
             onChange?.();
           }}
+          defaultValue={defaulValue}
         />
         <Icon
           className={`${

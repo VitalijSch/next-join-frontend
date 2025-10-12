@@ -2,7 +2,7 @@
 
 import { Contact } from "../interfaces/contact";
 
-export async function createContact(contact: Contact): Promise<Contact> {
+export async function createContact(contact: Contact): Promise<Contact[]> {
   const request = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/contacts/register/`,
     {

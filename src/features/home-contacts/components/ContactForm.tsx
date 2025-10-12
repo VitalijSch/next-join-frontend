@@ -10,8 +10,12 @@ import InputField from "@/shared/components/auth/InputField";
 import { contactSchema, ContactSchema } from "../schemas/contactSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContactForm } from "../hooks/useContactForm";
 import NameIcon from "@/shared/components/icons/NameIcon";
+import { useContactStore } from "../stores/useContactStore";
+import { getAbbreviation } from "../utils/getAbbreviation";
+import { useDeleteContact } from "../hooks/useDeleteContact";
+import { useCreateContact } from "../hooks/useCreateContact";
+import { useUpdateContact } from "../hooks/useUpdateContact";
 
 interface ContactFormProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -37,9 +41,22 @@ export default function ContactForm({
     resolver: zodResolver(contactSchema),
   });
 
-  const { handleCreateContact } = useContactForm(reset, setOpen);
+  const selectedContact = useContactStore((state) => state.selectedContact);
+
+  const handleCreateContact = useCreateContact(reset, setOpen);
+
+  const handleUpdateContact = useUpdateContact(reset, setOpen);
 
   const inputFields = useContactFields(errors);
+
+  const handleDeleteContact = useDeleteContact();
+
+  function getDefaultValue(value: string) {
+    if (!selectedContact) return undefined;
+    if (value === "name") return selectedContact.name;
+    if (value === "email") return selectedContact.email;
+    return selectedContact.phone;
+  }
 
   return (
     <div
@@ -71,7 +88,9 @@ export default function ContactForm({
         <div className="flex-1 h-full flex flex-col items-end gap-[57px] pt-[48px] pr-[48px] bg-white">
           <CloseButton handleOnClick={() => setOpen(false)} />
           <form
-            onSubmit={handleSubmit(handleCreateContact)}
+            onSubmit={handleSubmit(
+              !subtitle ? handleUpdateContact : handleCreateContact
+            )}
             className="max-w-[422px] w-full flex flex-col gap-[32px]"
           >
             {inputFields.map((field) => (
@@ -84,27 +103,66 @@ export default function ContactForm({
                 Icon={field.Icon}
                 register={register}
                 error={field.error}
+                defaulValue={
+                  !subtitle ? getDefaultValue(field.name) : undefined
+                }
               />
             ))}
             <div className="flex items-center gap-[24px]">
-              <BorderButton
-                classButton="w-[126px] h-[56px]"
-                classSpan="text-[20px]"
-                name="Cancel"
-                handleOnClick={() => setOpen(false)}
-                Icon={CloseIcon}
-              />
-              <BackgroundButton
-                type="submit"
-                classButton="w-[214px] h-[57px] gap-[4px]"
-                classSpan="text-[21px]"
-                name="Create contact"
-                Icon={CheckIcon}
-              />
+              {!subtitle ? (
+                <>
+                  <BorderButton
+                    classButton="w-[113px] h-[55px]"
+                    classSpan="text-[21px]"
+                    name="Delete"
+                    handleOnClick={() => {
+                      handleDeleteContact();
+                      setOpen(false);
+                    }}
+                  />
+                  <BackgroundButton
+                    type="submit"
+                    classButton="w-[111px] h-[57px] gap-[4px]"
+                    classSpan="text-[21px]"
+                    name="Save"
+                    Icon={CheckIcon}
+                  />
+                </>
+              ) : (
+                <>
+                  <BorderButton
+                    classButton="w-[126px] h-[56px]"
+                    classSpan="text-[20px]"
+                    name="Cancel"
+                    handleOnClick={() => setOpen(false)}
+                    Icon={CloseIcon}
+                  />
+                  <BackgroundButton
+                    type="submit"
+                    classButton="w-[214px] h-[57px] gap-[4px]"
+                    classSpan="text-[21px]"
+                    name="Create contact"
+                    Icon={CheckIcon}
+                  />
+                </>
+              )}
             </div>
           </form>
-          <div className="absolute top-[204px] left-[550px] w-[120px] h-[120px] flex justify-center items-center bg-[#D1D1D1] border-3 border-white rounded-full shadow-[0px_0px_4px_0px_#0000001A]">
-            <NameIcon className="w-[64px] h-[64px] text-white" />
+          <div
+            style={{
+              backgroundColor: !subtitle
+                ? selectedContact?.icon_color
+                : "#D1D1D1",
+            }}
+            className="absolute top-[204px] left-[550px] w-[120px] h-[120px] flex justify-center items-center border-3 border-white rounded-full shadow-[0px_0px_4px_0px_#0000001A]"
+          >
+            {!subtitle && selectedContact ? (
+              <span className="text-[47px] text-white font-[500]">
+                {getAbbreviation(selectedContact.name)}
+              </span>
+            ) : (
+              <NameIcon className="w-[64px] h-[64px] text-white" />
+            )}
           </div>
         </div>
       </div>

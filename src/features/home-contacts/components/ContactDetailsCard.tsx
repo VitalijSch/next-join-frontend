@@ -1,34 +1,24 @@
 "use client";
 
 import EditIcon from "@/shared/components/icons/EditIcon";
-import { Contact } from "../interfaces/contact";
 import { getAbbreviation } from "../utils/getAbbreviation";
 import DeleteIcon from "@/shared/components/icons/DeleteIcon";
 import { Dispatch, SetStateAction } from "react";
-import { deleteContact } from "../api/deleteContact";
 import { useContactStore } from "../stores/useContactStore";
+import { useDeleteContact } from "../hooks/useDeleteContact";
 
 interface ContactDetailsCardProps {
-  selectedContact: Contact;
   setOpenEditContact: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function ContactDetailsCard({
-  selectedContact,
   setOpenEditContact,
 }: ContactDetailsCardProps) {
-  const contacts = useContactStore((state) => state.contacts);
-  const setContacts = useContactStore((state) => state.setContacts);
-  const setSelectedContact = useContactStore(
-    (state) => state.setSelectedContact
-  );
+  const selectedContact = useContactStore((state) => state.selectedContact);
 
-  async function handleDeleteContact() {
-    await deleteContact(selectedContact.id!);
-    const filteredContacts = contacts.filter((contact) => contact.id !== selectedContact.id);
-    setContacts(filteredContacts);
-    setSelectedContact(null);
-  }
+  const handleDeleteContact = useDeleteContact();
+
+  if (!selectedContact) return null;
 
   return (
     <div className="flex flex-col gap-[21px] animate-slideInRight">
@@ -54,7 +44,10 @@ export default function ContactDetailsCard({
                 Edit
               </span>
             </div>
-            <div onClick={() => handleDeleteContact()} className="group flex items-center gap-[10px] cursor-pointer">
+            <div
+              onClick={() => handleDeleteContact()}
+              className="group flex items-center gap-[10px] cursor-pointer"
+            >
               <DeleteIcon className="group-hover:text-[#29ABE2]" />
               <span className="text-[#2A3647] group-hover:text-[#29ABE2] group-hover:font-[700] transition-all duration-300 ease-in-out">
                 Delete

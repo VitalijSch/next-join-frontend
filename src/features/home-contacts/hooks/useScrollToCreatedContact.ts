@@ -10,14 +10,15 @@ export default function useScrollToCreatedContact() {
   );
 
   useEffect(() => {
-    if (scrollToContact) {
-      const lastElement = contactRefs.current[selectedContact!.id!.toString()];
-      if (lastElement) {
-        lastElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (scrollToContact && selectedContact && selectedContact.id) {
+      const el = contactRefs.current[selectedContact.id.toString()];
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
         setScrollToContact(false);
       }
     }
-  }, [scrollToContact]);
+  }, [scrollToContact, selectedContact]);
+  
 
   return {
     contactRefs,

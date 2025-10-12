@@ -1,22 +1,23 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useLoading } from "@/shared/contexts/LoadingContext";
 import { ContactSchema } from "../schemas/contactSchema";
 import { createContact } from "../api/createContact";
 import { colors } from "../data/colors";
-import { useGetContacts } from "./useGetContacts";
 import { useContactStore } from "../stores/useContactStore";
+import { Contact } from "../interfaces/contact";
 
-export function useContactForm(
+export function useCreateContact(
   reset: () => void,
   setOpen: Dispatch<SetStateAction<boolean>>
 ) {
   const { startLoading, stopLoading } = useLoading();
 
-  const contacts = useContactStore((state) => state.contacts);
-
   const setScrollToContact = useContactStore(
     (state) => state.setScrollToContact
   );
+
+  const contacts = useContactStore((state) => state.contacts);
+  const setContacts = useContactStore((state) => state.setContacts);
 
   const setSelectedContact = useContactStore(
     (state) => state.setSelectedContact
@@ -26,28 +27,36 @@ export function useContactForm(
     (state) => state.setShowToastMessage
   );
 
-  const handleGetContacts = useGetContacts();
-
-  async function handleCreateContact(data: ContactSchema) {
-    await processUserSignup(data);
+  async function handleCreateContact(userData: ContactSchema) {
+    const newContact = buildNewContact(userData);
+    startLoading();
+    await createContact(newContact);
+    updateContactState(newContact);
+    resetFormAndCloseModal();
+    showSuccessToast();
+    stopLoading();
   }
 
-  async function processUserSignup(userData: ContactSchema) {
-    startLoading();
-    const contactWithColor = {
+  function buildNewContact(userData: ContactSchema): Contact {
+    return {
       ...userData,
+      id: contacts[contacts.length - 1]?.id + 1 || 1,
       icon_color: getRandomColor(),
     };
-    await createContact(contactWithColor);
-    await handleGetContacts();
-    stopLoading();
-    reset();
-    setOpen(false);
-    setScrollToContact(true);
-    handleToastMessage();
   }
 
-  function handleToastMessage() {
+  function updateContactState(newContact: Contact) {
+    setContacts([...contacts, newContact]);
+    setSelectedContact(newContact);
+    setScrollToContact(true);
+  }
+
+  function resetFormAndCloseModal() {
+    reset();
+    setOpen(false);
+  }
+
+  function showSuccessToast() {
     setShowToastMessage(true);
     setTimeout(() => {
       setShowToastMessage(false);
@@ -59,13 +68,5 @@ export function useContactForm(
     return colors[randomIndex];
   }
 
-  useEffect(() => {
-    if (contacts.length > 0) {
-      setSelectedContact(contacts[contacts.length - 1]);
-    }
-  }, [contacts]);
-
-  return {
-    handleCreateContact,
-  };
+  return handleCreateContact;
 }

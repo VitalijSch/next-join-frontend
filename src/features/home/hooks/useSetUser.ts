@@ -3,8 +3,11 @@ import { useEffect } from "react";
 import { getUser } from "../api/getUser";
 import { getRefreshToken } from "../api/getRefreshToken";
 import { useLogoutUser } from "./useLogoutUser";
+import { useLoading } from "@/shared/contexts/LoadingContext";
 
 export function useSetUser() {
+  const { startLoading, stopLoading } = useLoading();
+
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
 
@@ -13,11 +16,16 @@ export function useSetUser() {
   useEffect(() => {
     if (user.id === 0) {
       async function handleGetRefreshToken() {
-        return await getRefreshToken();
+        startLoading();
+        const refreshToekn = await getRefreshToken();
+        stopLoading();
+        return refreshToekn;
       }
 
       async function handleGetUser() {
+        startLoading();
         const user = await getUser();
+        stopLoading();
         if (user.detail === "Authentication credentials were not provided.") {
           const token = await handleGetRefreshToken();
           if (

@@ -1,7 +1,7 @@
 import { useLoading } from "@/shared/contexts/LoadingContext";
 import { LoginSchema } from "../schemas/loginSchema";
 import { LoginUser, loginUser } from "../api/loginUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/shared/stores/useUserStore";
 
