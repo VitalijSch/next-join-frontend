@@ -1,22 +1,18 @@
 "use client";
 
 import LogoIcon from "@/shared/components/icons/LogoIcon";
-import { sidebarLinks } from "../data/sidebarLinks";
 import { links } from "@/features/auth/data/navLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUserStore } from "@/shared/stores/useUserStore";
+import { getFilteredLinks } from "../utils/getFilteredLinks";
 
 export default function SidebarHome() {
   const pathname = usePathname();
 
   const user = useUserStore((state) => state.user);
 
-  const isUserLogged = user.email !== "";
-
-  const sidebarFilteredLinks = isUserLogged
-    ? sidebarLinks.slice(1)
-    : sidebarLinks.slice(0, 1);
+  const sidebarFilteredLinks = getFilteredLinks(user.email);
 
   return (
     <section className="row-start-1 row-end-3 flex flex-col justify-between items-center py-[64px] bg-[#2A3647]">

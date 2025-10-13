@@ -1,4 +1,4 @@
-export default function CheckedIcon() {
+export default function CheckedBoxIcon() {
   return (
     <svg
       width="24"

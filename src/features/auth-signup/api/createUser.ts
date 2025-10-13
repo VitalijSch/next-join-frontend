@@ -7,12 +7,11 @@ interface User {
 }
 
 interface CreateUser {
-  error?: string;
-  message?: string;
+  email: string[];
 }
 
 export async function createUser(user: User): Promise<CreateUser> {
-  const request = await fetch("http://10.8.6.154:1337/create/user", {
+  const request = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/register/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

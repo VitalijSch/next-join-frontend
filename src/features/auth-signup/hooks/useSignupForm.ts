@@ -51,8 +51,9 @@ export function useSignupForm(reset: () => void) {
     startLoading();
     const response = await createUser(userData);
     stopLoading();
-    if (response.error) {
-      showEmailExistsError(response.error);
+    
+    if (response.email[0] === "custom user with this email already exists.") {
+      showEmailExistsError(response.email[0]);
       return;
     }
     handleSignupSuccess();

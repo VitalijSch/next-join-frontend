@@ -6,10 +6,8 @@ import { LoginSchema } from "../schemas/loginSchema";
 
 export function useLoginFields(
   watch: (field: Path<LoginSchema>) => string,
-  setEmailError: (msg: string | null) => void,
-  setPasswordError: (msg: string | null) => void,
-  emailError: string | null,
-  passwordError: string | null,
+  emailPasswordError: string | null,
+  setEmailPasswordError: (msg: string | null) => void,
   errors: FieldErrors<{
     email: string;
     password: string;
@@ -25,8 +23,7 @@ export function useLoginFields(
       placeholder: "Email",
       type: "email",
       Icon: EmailIcon,
-      error: emailError || errors.email?.message,
-      onChange: () => setEmailError(null),
+      error: errors.email?.message,
     },
     {
       name: "password",
@@ -40,8 +37,8 @@ export function useLoginFields(
           error={errors.password?.message}
         />
       ),
-      error: passwordError || errors.password?.message,
-      onChange: () => setPasswordError(null),
+      error: emailPasswordError || errors.password?.message,
+      onChange: () => setEmailPasswordError(null),
     },
   ] as const;
 }

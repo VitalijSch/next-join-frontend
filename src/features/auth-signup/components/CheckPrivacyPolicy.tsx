@@ -1,5 +1,5 @@
-import CheckedIcon from "@/shared/components/icons/CheckedIcon";
-import CheckIcon from "@/shared/components/icons/CheckIcon";
+import CheckedBoxIcon from "@/shared/components/icons/CheckedBoxIcon";
+import CheckboxIcon from "@/shared/components/icons/CheckboxIcon";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
@@ -21,8 +21,8 @@ export default function CheckPrivacyPolicy({
           onClick={() => setChecked(!checked)}
           className="w-[24px] h-[24px] flex justify-center items-center rounded-full cursor-pointer hover:bg-[#EDF2FA] transition-colors duration-300 ease-in-out"
         >
-          {!checked && <CheckIcon />}
-          {checked && <CheckedIcon />}
+          {!checked && <CheckboxIcon />}
+          {checked && <CheckedBoxIcon />}
         </div>
         <p className="w-[200px] text-[#A8A8A8]">
           I accept the{" "}
