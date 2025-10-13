@@ -4,6 +4,8 @@ import { getUser } from "../api/getUser";
 import { getRefreshToken } from "../api/getRefreshToken";
 import { useLogoutUser } from "./useLogoutUser";
 import { useLoading } from "@/shared/contexts/LoadingContext";
+import { Token } from "../interfaces/token";
+import { User } from "@/shared/interfaces/user";
 
 export function useSetUser() {
   const { startLoading, stopLoading } = useLoading();
@@ -13,33 +15,43 @@ export function useSetUser() {
 
   const handleLogoutUser = useLogoutUser();
 
-  useEffect(() => {
-    if (user.id === 0) {
-      async function handleGetRefreshToken() {
-        startLoading();
-        const refreshToekn = await getRefreshToken();
-        stopLoading();
-        return refreshToekn;
-      }
-
-      async function handleGetUser() {
-        startLoading();
-        const user = await getUser();
-        stopLoading();
-        if (user.detail === "Authentication credentials were not provided.") {
-          const token = await handleGetRefreshToken();
-          if (
-            token.error === "Refresh token not provided" ||
-            token.error === "Invalid token"
-          ) {
-            await handleLogoutUser();
-          }
-        } else {
-          setUser(user);
-        }
-      }
-
-      handleGetUser();
+  async function handleGetUser() {
+    startLoading();
+    try {
+      const user = await getUser();
+      handleUserResponse(user);
+    } finally {
+      stopLoading();
     }
-  }, [handleLogoutUser, setUser, user]);
+  }
+
+  function handleUserResponse(user: User) {
+    if (isAuthError(user)) {
+      handleAuthError();
+    } else {
+      setUser(user);
+    }
+  }
+
+  function isAuthError(user: User) {
+    return user?.detail === "Authentication credentials were not provided.";
+  }
+
+  async function handleAuthError() {
+    const token = await getRefreshToken();
+    if (isInvalidToken(token)) {
+      await handleLogoutUser();
+    }
+  }
+
+  function isInvalidToken(token: Token) {
+    return (
+      token?.error === "Refresh token not provided" ||
+      token?.error === "Invalid token"
+    );
+  }
+
+  useEffect(() => {
+    if (user.id === 0) handleGetUser();
+  }, [user]);
 }

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useContactStore } from "../stores/useContactStore";
 import ContactDetailsCard from "./ContactDetailsCard";
-import ContactForm from "./ContactForm";
 import ToastMessage from "@/shared/components/toasts/ToastMessage";
+import ContactDialog from "./ContactDialog";
 
 export default function ContactDetails() {
   const [openEditContact, setOpenEditContact] = useState(false);
@@ -29,7 +29,7 @@ export default function ContactDetails() {
         )}
       </div>
       {openEditContact && (
-        <ContactForm
+        <ContactDialog
           classHeadlineParent="h-[89px]"
           classLogo="-top-[90px]"
           setOpen={setOpenEditContact}

@@ -6,8 +6,8 @@ import ScrollbarArrowDownIcon from "@/shared/components/icons/ScrollbarArrowDown
 import ScrollbarArrowUpIcon from "@/shared/components/icons/ScrollbarArrowUpIcon";
 import { useGetContacts } from "../hooks/useGetContacts";
 import ContactListCard from "./ContactListCard";
-import ContactForm from "./ContactForm";
 import { useState } from "react";
+import ContactDialog from "./ContactDialog";
 
 export default function ContactList() {
   const [openAddNewContact, setOpenAddNewContact] = useState(false);
@@ -37,7 +37,7 @@ export default function ContactList() {
         </div>
       </div>
       {openAddNewContact && (
-        <ContactForm
+        <ContactDialog
           classHeadlineParent="h-[129px]"
           classLogo="-top-[70px]"
           setOpen={setOpenAddNewContact}
