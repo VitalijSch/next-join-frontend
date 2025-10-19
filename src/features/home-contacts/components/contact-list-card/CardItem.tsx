@@ -1,7 +1,7 @@
+import ContactAvatar from "@/shared/components/avatars/ContactAvatar";
 import useScrollToCreatedContact from "../../hooks/useScrollToCreatedContact";
 import { Contact } from "../../interfaces/contact";
 import { useContactStore } from "../../stores/useContactStore";
-import { getAbbreviation } from "../../utils/getAbbreviation";
 
 interface CardItemProps {
   contact: Contact;
@@ -31,14 +31,10 @@ export default function CardItem({ contact }: CardItemProps) {
           : "hover:bg-[linear-gradient(180deg,#F9F9F9_0%,#F0F0F0_100%)]"
       } w-[352px] h-[78px] flex items-center gap-[35px] px-[24px] rounded-[10px] cursor-pointer`}
     >
-      <div
-        style={{ backgroundColor: contact.icon_color }}
-        className="w-[42px] h-[42px] flex justify-center items-center border-2 border-white rounded-[45px]"
-      >
-        <span className="text-[12px] text-white">
-          {getAbbreviation(contact.name)}
-        </span>
-      </div>
+      <ContactAvatar
+        color={contact.icon_color}
+        name={contact.name}
+      />
       <div className="flex flex-col gap-[5px]">
         <span
           className={`${
