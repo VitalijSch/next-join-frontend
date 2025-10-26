@@ -1,6 +1,6 @@
 "use client";
 
-import { useOpenContacts } from "@/features/home-add-task/stores/useOpenContacts";
+import { useOpen } from "@/features/home-add-task/stores/useOpenContacts";
 import HeaderHome from "@/features/home/components/HeaderHome";
 import SidebarHome from "@/features/home/components/SidebarHome";
 import { useSetUser } from "@/features/home/hooks/useSetUser";
@@ -12,7 +12,7 @@ export default function HomeLayout({
 }>) {
   useSetUser();
 
-  const setOpen = useOpenContacts((state) => state.setOpen);
+  const setOpen = useOpen((state) => state.setOpen);
 
   return (
     <main

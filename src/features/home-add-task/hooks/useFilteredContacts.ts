@@ -1,31 +1,12 @@
 import { Contact } from "@/features/home-contacts/interfaces/contact";
 import { useContactStore } from "@/features/home-contacts/stores/useContactStore";
-import { useEffect, useState } from "react";
-import { useFormTask } from "./useFormTask";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-export function useFilteredContacts() {
-  const [search, setSearch] = useState("");
-  const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
-
+export function useFilteredContacts(
+  search: string,
+  setFilteredContacts: Dispatch<SetStateAction<Contact[]>>,
+) {
   const contacts = useContactStore((state) => state.contacts);
-
-  const { watch, setValue } = useFormTask();
-
-  const assignedTo = watch("assigned_to");
-
-  function isSelected(id: number) {
-    return assignedTo.some((contact) => contact.id === id);
-  }
-
-  function handleSelectedContact(contact: Contact) {
-    const alreadySelected = assignedTo.some((c) => c.id === contact.id);
-    setValue(
-      "assigned_to",
-      alreadySelected
-        ? assignedTo.filter((c) => c.id !== contact.id)
-        : [...assignedTo, contact]
-    );
-  }
 
   useEffect(() => {
     function handleFilteredContacts() {
@@ -39,15 +20,7 @@ export function useFilteredContacts() {
         setFilteredContacts(newContactList);
       }
     }
-
+    
     handleFilteredContacts();
   }, [contacts, search]);
-
-  return {
-    search,
-    setSearch,
-    filteredContacts,
-    isSelected,
-    handleSelectedContact,
-  };
 }
