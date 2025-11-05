@@ -2,7 +2,7 @@ interface BoardIconProps {
   className: string;
 }
 
-export default function BoardIcon({ className }: BoardIconProps) {
+export default function BoardIcon({ className="text-[#CDCDCD]" }: BoardIconProps) {
   return (
     <svg
       className={className}

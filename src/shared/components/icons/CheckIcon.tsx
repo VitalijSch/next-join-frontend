@@ -1,6 +1,11 @@
-export default function CheckIcon() {
+interface CheckIconProps {
+  className?: string;
+}
+
+export default function CheckIcon({ className = "text-white" }: CheckIconProps) {
   return (
     <svg
+      className={className}
       width="24"
       height="25"
       viewBox="0 0 24 25"
@@ -20,7 +25,7 @@ export default function CheckIcon() {
       <g mask="url(#mask0_376469_4381)">
         <path
           d="M9.55057 15.65L18.0256 7.175C18.2256 6.975 18.4631 6.875 18.7381 6.875C19.0131 6.875 19.2506 6.975 19.4506 7.175C19.6506 7.375 19.7506 7.6125 19.7506 7.8875C19.7506 8.1625 19.6506 8.4 19.4506 8.6L10.2506 17.8C10.0506 18 9.81724 18.1 9.55057 18.1C9.28391 18.1 9.05057 18 8.85057 17.8L4.55057 13.5C4.35057 13.3 4.25474 13.0625 4.26307 12.7875C4.27141 12.5125 4.37557 12.275 4.57557 12.075C4.77557 11.875 5.01307 11.775 5.28807 11.775C5.56307 11.775 5.80057 11.875 6.00057 12.075L9.55057 15.65Z"
-          fill="white"
+          fill="currentColor"
         />
       </g>
     </svg>

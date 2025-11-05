@@ -1,22 +1,23 @@
 interface ToastMessageProps {
   message: string;
+  animation?: string;
   Icon?: React.ElementType;
 }
 
-export default function ToastMessage({ message, Icon }: ToastMessageProps) {
+export default function ToastMessage({
+  message,
+  animation,
+  Icon,
+}: ToastMessageProps) {
   return (
     <div
       className={`${
         message !== "Contact succesfully created" &&
-        "fixed inset-0 z-50 flex justify-center items-center bg-black/20"
+        "fixed inset-0 z-[99999] flex justify-center items-center bg-black/20"
       }`}
     >
       <div
-        className={`${
-          message === "Contact succesfully created"
-            ? "opacity-0 animate-slideInRightToast"
-            : "animate-bottomCenter"
-        } w-fit h-[74px] flex justify-center items-center gap-[8px] px-[45px] bg-[#2A3647] rounded-[20px] shadow-[0px_0px_4px_0px_#00000026]`}
+        className={`${animation} w-[326px] h-[74px] flex justify-between items-center px-[45px] bg-[#2A3647] rounded-[20px] shadow-[0px_0px_4px_0px_#00000026]`}
       >
         <span className="text-[20px] text-white">{message}</span>
         {Icon && <Icon />}

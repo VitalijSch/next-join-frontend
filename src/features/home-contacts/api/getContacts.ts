@@ -1,9 +1,10 @@
 "use server";
 
+import { apiRequest } from "@/shared/api/apiRequest";
 import { Contact } from "../interfaces/contact";
 
-export async function getContacts(): Promise<Contact[]> {
-  const response = await fetch(
+export async function getContacts() {
+  return apiRequest<Contact[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/contacts/contact-info/`,
     {
       method: "GET",
@@ -11,5 +12,4 @@ export async function getContacts(): Promise<Contact[]> {
       headers: { "Content-Type": "application/json" },
     }
   );
-  return response.json();
 }

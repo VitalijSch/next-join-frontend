@@ -1,5 +1,5 @@
 interface DeleteIconProps {
-  className: string;
+  className?: string;
 }
 
 export default function DeleteIcon({ className }: DeleteIconProps) {

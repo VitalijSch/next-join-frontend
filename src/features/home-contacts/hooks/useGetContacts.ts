@@ -15,7 +15,7 @@ export function useGetContacts() {
     startLoading();
     const contacts = await getContacts();
     stopLoading();
-    setContacts(contacts);
+    if(contacts.ok && contacts.data) setContacts(contacts.data);
   }
 
   useEffect(() => {

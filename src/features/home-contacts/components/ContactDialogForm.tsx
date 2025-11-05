@@ -52,7 +52,7 @@ export default function ContactDialogForm({
           Icon={field.Icon}
           register={register}
           error={field.error}
-          defaulValue={!subtitle ? selectedContact?.[field.name] : undefined}
+          defaultValue={!subtitle ? selectedContact?.[field.name] : undefined}
         />
       ))}
       <FormButtons subtitle={subtitle} setOpen={setOpen} />

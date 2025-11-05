@@ -5,13 +5,14 @@ import { useContactStore } from "../stores/useContactStore";
 import ContactDetailsCard from "./ContactDetailsCard";
 import ToastMessage from "@/shared/components/toasts/ToastMessage";
 import ContactDialog from "./ContactDialog";
+import { useToastMessageStore } from "@/shared/stores/useToastMessageStore";
 
 export default function ContactDetails() {
   const [openEditContact, setOpenEditContact] = useState(false);
 
   const selectedContact = useContactStore((state) => state.selectedContact);
 
-  const showToastMessage = useContactStore((state) => state.showToastMessage);
+  const showToastMessage = useToastMessageStore((state) => state.showToastMessage);
 
   return (
     <>
@@ -25,7 +26,7 @@ export default function ContactDetails() {
           <ContactDetailsCard setOpenEditContact={setOpenEditContact} />
         )}
         {showToastMessage && (
-          <ToastMessage message="Contact succesfully created" />
+          <ToastMessage message="Contact succesfully created" animation="opacity-0 animate-slideInRightToast" />
         )}
       </div>
       {openEditContact && (

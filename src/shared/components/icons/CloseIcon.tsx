@@ -1,7 +1,11 @@
-export default function CloseIcon() {
+interface CloseIconProps {
+  className?: string;
+}
+
+export default function CloseIcon({className}: CloseIconProps) {
   return (
     <svg
-      className="transition-all duration-300 ease-in-out"
+      className={`${className} transition-all duration-300 ease-in-out`}
       width="32"
       height="32"
       viewBox="0 0 32 32"

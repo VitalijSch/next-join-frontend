@@ -5,6 +5,7 @@ import { createContact } from "../api/createContact";
 import { colors } from "../data/colors";
 import { useContactStore } from "../stores/useContactStore";
 import { Contact } from "../interfaces/contact";
+import { useToast } from "@/shared/hooks/useToast";
 
 export function useCreateContact(
   reset: () => void,
@@ -23,9 +24,7 @@ export function useCreateContact(
     (state) => state.setSelectedContact
   );
 
-  const setShowToastMessage = useContactStore(
-    (state) => state.setShowToastMessage
-  );
+  const showSuccessToast = useToast();
 
   async function handleCreateContact(userData: ContactSchema) {
     const newContact = buildNewContact(userData);
@@ -33,7 +32,7 @@ export function useCreateContact(
     await createContact(newContact);
     updateContactState(newContact);
     resetFormAndCloseModal();
-    showSuccessToast();
+    showSuccessToast(2000);
     stopLoading();
   }
 
@@ -54,13 +53,6 @@ export function useCreateContact(
   function resetFormAndCloseModal() {
     reset();
     setOpen(false);
-  }
-
-  function showSuccessToast() {
-    setShowToastMessage(true);
-    setTimeout(() => {
-      setShowToastMessage(false);
-    }, 2000);
   }
 
   function getRandomColor() {
