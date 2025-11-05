@@ -1,5 +1,5 @@
 interface EditIconProps {
-  className: string;
+  className?: string;
 }
 
 export default function EditIcon({ className }: EditIconProps) {

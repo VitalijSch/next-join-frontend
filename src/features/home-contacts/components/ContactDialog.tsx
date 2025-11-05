@@ -1,8 +1,9 @@
-import CloseButton from "@/shared/components/buttons/CloseButton";
 import { Dispatch, SetStateAction } from "react";
 import ContactDialogForm from "./ContactDialogForm";
 import ContactDialogHeader from "./ContactDialogHeader";
 import ContactDialogAvatar from "./ContactDialogAvatar";
+import HandleButton from "@/shared/components/buttons/HandleButton";
+import CloseIcon from "@/shared/components/icons/CloseIcon";
 
 interface ContactDialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -35,7 +36,7 @@ export default function ContactDialog({
           subtitle={subtitle}
         />
         <div className="flex-1 h-full flex flex-col items-end gap-[57px] pt-[48px] pr-[48px] bg-white">
-          <CloseButton handleOnClick={() => setOpen(false)} />
+          <HandleButton handleOnClick={() => setOpen(false)} Icon={<CloseIcon />} />
           <ContactDialogForm subtitle={subtitle} setOpen={setOpen} />
           <ContactDialogAvatar subtitle={subtitle} />
         </div>

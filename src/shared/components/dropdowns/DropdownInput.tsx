@@ -33,9 +33,7 @@ export function DropdownInput({
   }, [inputRef, open, setValue, value]);
 
   useEffect(() => {
-    if (!setValue) {
-      setOpen(false);
-    }
+    if (!setValue) setOpen(false);
   }, [value]);
 
   return (

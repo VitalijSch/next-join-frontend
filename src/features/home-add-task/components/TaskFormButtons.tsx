@@ -4,10 +4,10 @@ import BackgroundButton from "@/shared/components/buttons/BackgroundButton";
 import BorderButton from "@/shared/components/buttons/BorderButton";
 import CheckIcon from "@/shared/components/icons/CheckIcon";
 import CloseIcon from "@/shared/components/icons/CloseIcon";
-import { useFormTask } from "../hooks/useFormTask";
+import { useFormContext } from "react-hook-form";
 
 export default function TaskFormButtons() {
-  const { reset } = useFormTask();
+  const { reset } = useFormContext();
 
   return (
     <div className="absolute right-[96px] bottom-[79px]">

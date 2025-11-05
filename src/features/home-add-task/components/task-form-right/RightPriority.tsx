@@ -1,9 +1,9 @@
+import { useFormContext } from "react-hook-form";
 import { priorities } from "../../data/priorities";
-import { useFormTask } from "../../hooks/useFormTask";
 import RightPriorityCard from "./RightPriorityCard";
 
 export default function RightPriority() {
-  const { watch, setValue } = useFormTask();
+  const { watch, setValue } = useFormContext();
   const priority = watch("priority");
 
   return (

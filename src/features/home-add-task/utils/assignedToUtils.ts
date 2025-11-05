@@ -1,6 +1,6 @@
 import { Contact } from "@/features/home-contacts/interfaces/contact";
-import { TaskSchema } from "../schemas/taskSchema";
 import { UseFormSetValue } from "react-hook-form";
+import { TaskSchema } from "../schemas/taskSchema";
 
 export function handleRemoveContact(
   contacts: Contact[],

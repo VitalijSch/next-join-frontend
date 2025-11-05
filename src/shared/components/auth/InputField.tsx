@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { Path, UseFormRegister } from "react-hook-form";
 
 interface InputFieldProps<T extends Record<string, unknown>> {
@@ -8,8 +9,9 @@ interface InputFieldProps<T extends Record<string, unknown>> {
   Icon?: React.ElementType;
   register: UseFormRegister<T>;
   error?: string;
-  onChange?: () => void;
-  defaulValue?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: string;
+  value?: string;
 }
 
 export default function InputField<T extends Record<string, unknown>>({
@@ -21,7 +23,8 @@ export default function InputField<T extends Record<string, unknown>>({
   register,
   error,
   onChange,
-  defaulValue,
+  defaultValue,
+  value
 }: InputFieldProps<T>) {
   return (
     <div className="flex flex-col gap-[8px]">
@@ -39,9 +42,10 @@ export default function InputField<T extends Record<string, unknown>>({
           {...register(name)}
           onChange={(e) => {
             register(name).onChange(e);
-            onChange?.();
+            onChange?.(e);
           }}
-          defaultValue={defaulValue}
+          defaultValue={defaultValue}
+          value={value}
         />
         {Icon && (
           <Icon

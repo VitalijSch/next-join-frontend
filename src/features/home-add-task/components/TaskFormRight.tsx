@@ -1,6 +1,7 @@
 import RightPriority from "./task-form-right/RightPriority";
 import RightAssigned from "./task-form-right/RightAssigned";
 import RightCategory from "./task-form-right/RightCategory";
+import RightSubtasks from "./task-form-right/RightSubtasks";
 
 export default function TaskFormRight() {
   return (
@@ -8,6 +9,7 @@ export default function TaskFormRight() {
       <RightPriority />
       <RightAssigned />
       <RightCategory />
+      <RightSubtasks />
     </div>
   );
 }

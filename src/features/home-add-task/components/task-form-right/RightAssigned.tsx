@@ -4,15 +4,16 @@ import ContactAvatar from "@/shared/components/avatars/ContactAvatar";
 import { useFilteredContacts } from "../../hooks/useFilteredContacts";
 import { useState } from "react";
 import { Contact } from "@/features/home-contacts/interfaces/contact";
-import { useFormTask } from "../../hooks/useFormTask";
 import { handleRemoveContact } from "../../utils/assignedToUtils";
 import { DropdownInput } from "@/shared/components/dropdowns/DropdownInput";
+import { useFormContext } from "react-hook-form";
+import { TaskSchema } from "../../schemas/taskSchema";
 
 export default function RightAssigned() {
   const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
   const [search, setSearch] = useState("Select contacts to assign");
 
-  const { watch, setValue } = useFormTask();
+  const { watch, setValue } = useFormContext<TaskSchema>();
   const assignedTo = watch("assigned_to");
 
   useGetContacts();

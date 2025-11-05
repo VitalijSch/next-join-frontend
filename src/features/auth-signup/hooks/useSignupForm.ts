@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { createUser } from "../api/createUser";
-import { useToastMessageStore } from "@/shared/stores/useToastMessageStore";
 import { useLoading } from "@/shared/contexts/LoadingContext";
 import { SignupSchema } from "../schemas/signupSchema";
+import { useToast } from "@/shared/hooks/useToast";
 
 export function useSignupForm(reset: () => void) {
   const [checked, setChecked] = useState(false);
@@ -12,11 +11,9 @@ export function useSignupForm(reset: () => void) {
     null
   );
 
-  const router = useRouter();
   const { startLoading, stopLoading } = useLoading();
-  const setShowToastMessage = useToastMessageStore(
-    (state) => state.setShowToastMessage
-  );
+
+  const showSuccessToast = useToast();
 
   async function handleSignup(data: SignupSchema) {
     clearPreviousErrors();
@@ -49,37 +46,25 @@ export function useSignupForm(reset: () => void) {
     userData: Omit<SignupSchema, "confirmPassword">
   ) {
     startLoading();
-    const response = await createUser(userData);
+    const res = await createUser(userData);
     stopLoading();
     
-    if (response.email[0] === "custom user with this email already exists.") {
-      showEmailExistsError(response.email[0]);
+    if (!res.ok && res.message === "custom user with this email already exists.") {
+      showEmailExistsError(res.message);
       return;
     }
-    handleSignupSuccess();
+    showSuccessToast(3000, "/login");
+    resetAfterSuccess();
   }
 
   function showEmailExistsError(error: string) {
     setExistEmailMessage(error);
   }
 
-  function handleSignupSuccess() {
-    setShowToastMessage(true);
-    setTimeout(() => {
-      resetAfterSuccess();
-      navigateToLogin();
-    }, 3000);
-  }
-
   function resetAfterSuccess() {
     reset();
-    setShowToastMessage(false);
     setPrivacyPolicy(false);
     setChecked(false);
-  }
-
-  function navigateToLogin() {
-    router.push("/login");
   }
 
   return {

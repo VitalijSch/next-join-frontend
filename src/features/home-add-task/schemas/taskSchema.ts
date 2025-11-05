@@ -19,9 +19,11 @@ export const taskSchema = z.object({
     ),
   priority: z.enum(["Urgent", "Medium", "Low"]),
   assigned_to: z.array(ContactSchema),
-  category: z.enum(["Technical Task", "User Story", "Select task category"], {
-    message: "This field is required",
-  }),
+  category: z
+    .enum(["Technical Task", "User Story", "Select task category"])
+    .refine((value) => value !== "Select task category", {
+      message: "Please choose a category",
+    }),
   subtasks: z.array(z.string()),
 });
 
