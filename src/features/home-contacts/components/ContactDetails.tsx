@@ -26,7 +26,7 @@ export default function ContactDetails() {
           <ContactDetailsCard setOpenEditContact={setOpenEditContact} />
         )}
         {showToastMessage && (
-          <ToastMessage message="Contact succesfully created" animation="opacity-0 animate-slideInRightToast" />
+          <ToastMessage message="Contact succesfully created" className="w-fit opacity-0 animate-slideInRightToast" />
         )}
       </div>
       {openEditContact && (

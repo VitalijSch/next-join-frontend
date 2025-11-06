@@ -15,13 +15,16 @@ export function useDeleteContact() {
 
   async function handleDeleteContact() {
     if (!selectedContact) return;
-    startLoading();
-    await deleteContact(selectedContact.id);
-    stopLoading();
-    setContacts(
-      contacts.filter((contact) => contact.id !== selectedContact.id)
-    );
-    setSelectedContact(null);
+    try {
+      startLoading();
+      await deleteContact(selectedContact.id);
+      setContacts(
+        contacts.filter((contact) => contact.id !== selectedContact.id)
+      );
+      setSelectedContact(null);
+    } finally {
+      stopLoading();
+    }
   }
 
   return handleDeleteContact;

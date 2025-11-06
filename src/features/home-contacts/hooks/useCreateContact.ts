@@ -29,7 +29,7 @@ export function useCreateContact(
   async function handleCreateContact(userData: ContactSchema) {
     const newContact = buildNewContact(userData);
     startLoading();
-    await createContact(newContact);
+    const a = await createContact(newContact);
     updateContactState(newContact);
     resetFormAndCloseModal();
     showSuccessToast(2000);

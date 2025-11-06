@@ -48,9 +48,8 @@ export function useSignupForm(reset: () => void) {
     startLoading();
     const res = await createUser(userData);
     stopLoading();
-    
-    if (!res.ok && res.message === "custom user with this email already exists.") {
-      showEmailExistsError(res.message);
+    if (!("name" in res)) {
+      showEmailExistsError(res.email[0]);
       return;
     }
     showSuccessToast(3000, "/login");

@@ -12,10 +12,13 @@ export function useGetContacts() {
   const setContacts = useContactStore((state) => state.setContacts);
 
   async function handleGetContacts() {
-    startLoading();
-    const contacts = await getContacts();
-    stopLoading();
-    if(contacts.ok && contacts.data) setContacts(contacts.data);
+    try {
+      startLoading();
+      const res = await getContacts();
+      setContacts(res);
+    } finally {
+      stopLoading();
+    }
   }
 
   useEffect(() => {

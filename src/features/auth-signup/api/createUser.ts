@@ -1,24 +1,30 @@
 "use server";
 
-import { apiRequest } from "@/shared/api/apiRequest";
-
 interface User {
   name: string;
   email: string;
   password: string;
 }
 
-interface CreateUser {
+interface CreateUserError {
   email: string[];
 }
 
-export async function createUser(user: User) {
-  return apiRequest<CreateUser>(
+interface CreateUserSuccess {
+  name: string;
+  email: string;
+}
+
+export async function createUser(user: User): Promise<CreateUserError | CreateUserSuccess> {
+  const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/users/register/`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(user),
     }
   );
+  return res.json();
 }
