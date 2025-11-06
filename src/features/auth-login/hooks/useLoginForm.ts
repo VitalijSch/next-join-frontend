@@ -21,8 +21,8 @@ export function useLoginForm() {
     resetError();
     startLoading();
     const res = await loginUser(data);
-    if (res.non_field_errors) handleLoginErrors(res.non_field_errors[0]);
-    if (res.user) handleLoginSuccess(res.user);
+    if ("non_field_errors" in res) handleLoginErrors(res.non_field_errors[0]);
+    if ("user" in res) handleLoginSuccess(res.user);
     stopLoading();
   }
 

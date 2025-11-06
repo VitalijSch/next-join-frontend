@@ -48,7 +48,7 @@ export default function TaskForm() {
       {showToastMessage && (
         <ToastMessage
           message="Task added to board"
-          animation="animate-bottomCenter"
+          className="w-[326px] animate-bottomCenter"
           Icon={BoardIcon}
         />
       )}

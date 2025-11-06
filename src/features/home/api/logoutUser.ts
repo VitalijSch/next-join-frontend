@@ -1,15 +1,22 @@
 "use server";
 
-import { apiRequest } from "@/shared/api/apiRequest";
-import { User } from "@/shared/interfaces/user";
+interface LogoutUserError {
+  error: string;
+}
 
-export async function logoutUser() {
-  return apiRequest<User>(
-    `${process.env.NEXT_PUBLIC_API_URL}/users/logout/`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    }
-  )
+interface LogoutUserSuccess {
+  message: string;
+}
+
+export async function logoutUser(): Promise<
+  LogoutUserError | LogoutUserSuccess
+> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/logout/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  return res.json();
 }

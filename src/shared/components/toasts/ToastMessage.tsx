@@ -1,12 +1,12 @@
 interface ToastMessageProps {
   message: string;
-  animation?: string;
+  className: string;
   Icon?: React.ElementType;
 }
 
 export default function ToastMessage({
   message,
-  animation,
+  className,
   Icon,
 }: ToastMessageProps) {
   return (
@@ -17,7 +17,7 @@ export default function ToastMessage({
       }`}
     >
       <div
-        className={`${animation} w-[326px] h-[74px] flex justify-between items-center px-[45px] bg-[#2A3647] rounded-[20px] shadow-[0px_0px_4px_0px_#00000026]`}
+        className={`${className} h-[74px] flex justify-between items-center px-[45px] bg-[#2A3647] rounded-[20px] shadow-[0px_0px_4px_0px_#00000026]`}
       >
         <span className="text-[20px] text-white">{message}</span>
         {Icon && <Icon />}

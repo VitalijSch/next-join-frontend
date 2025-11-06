@@ -19,7 +19,7 @@ export default function SignupPage() {
         <SignupForm />
       </section>
       {showToastMessage && (
-        <ToastMessage message="You Signed Up successfully" animation="animate-bottomCenter" />
+        <ToastMessage message="You Signed Up successfully" className="w-fit animate-bottomCenter" />
       )}
     </>
   );

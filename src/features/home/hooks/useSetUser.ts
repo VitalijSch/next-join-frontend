@@ -4,8 +4,6 @@ import { getUser } from "../api/getUser";
 import { getRefreshToken } from "../api/getRefreshToken";
 import { useLogoutUser } from "./useLogoutUser";
 import { useLoading } from "@/shared/contexts/LoadingContext";
-import { Token } from "../interfaces/token";
-import { User } from "@/shared/interfaces/user";
 
 export function useSetUser() {
   const { startLoading, stopLoading } = useLoading();
@@ -18,37 +16,22 @@ export function useSetUser() {
   async function handleGetUser() {
     startLoading();
     try {
-      const user = await getUser();
-      handleUserResponse(user);
+      const res = await getUser();
+      if ("detail" in res) {
+        handleAuthError();
+        return
+      }
+      setUser(res.user);
     } finally {
       stopLoading();
     }
   }
 
-  function handleUserResponse(user: User) {
-    if (isAuthError(user)) {
-      handleAuthError();
-    } else {
-      setUser(user);
-    }
-  }
-
-  function isAuthError(user: User) {
-    return user?.detail === "Authentication credentials were not provided.";
-  }
-
   async function handleAuthError() {
-    const token = await getRefreshToken();
-    if (isInvalidToken(token)) {
+    const res = await getRefreshToken();
+    if ("error" in res) {
       await handleLogoutUser();
     }
-  }
-
-  function isInvalidToken(token: Token) {
-    return (
-      token?.error === "Refresh token not provided" ||
-      token?.error === "Invalid token"
-    );
   }
 
   useEffect(() => {
